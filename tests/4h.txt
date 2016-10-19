@@ -1,0 +1,2 @@
+﻿latin,phrase
+Ä€,DEF

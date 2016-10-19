@@ -1,0 +1,2 @@
+money|temp|date|time
+10|6.x|2016-10-02|12:03

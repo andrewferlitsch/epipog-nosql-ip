@@ -1,0 +1,4 @@
+country,state,city
+United States, Oregon, Newberg
+United States, Washington, Camas
+Australia, Northwest Territories, Humpty Doo

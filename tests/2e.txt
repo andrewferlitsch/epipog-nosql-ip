@@ -1,0 +1,3 @@
+country,state,city
+"United States, The", "Oregon, The State of", "Portland, The City of"
+"United States, The", "Oregon, The State of", "Salem, The City Of"

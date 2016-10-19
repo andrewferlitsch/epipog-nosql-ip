@@ -1,0 +1,3 @@
+country , state, city
+United States, Oregon, Portland, 100
+United States, Oregon, Salem, 200

@@ -1,0 +1,4 @@
+country,state
+Canada, Alberta
+United States of America, Oregon
+United Kingdom of Great Britain and Northern Ireland, London Borough

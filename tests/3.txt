@@ -1,0 +1,4 @@
+country,state,city,pop
+United States, Oregon, Portland, 1000000
+United States, Oregon, Salem, 100000
+United Status, Washington, Vancouver, 200000

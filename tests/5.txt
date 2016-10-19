@@ -1,0 +1,7 @@
+country,state,city
+United States, Oregon, Portland
+United States, Oregon, Salem
+United States, Washington, Seattle
+Canada, British Columbia, Vancouver
+Canada, Alberta, Banff
+Canada, Alberta, Calgary

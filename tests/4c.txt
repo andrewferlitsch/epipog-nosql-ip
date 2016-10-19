@@ -1,0 +1,2 @@
+money|temp|date|time
+ab|6.2|2016-10-02|12:03
