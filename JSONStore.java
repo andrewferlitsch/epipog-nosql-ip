@@ -147,7 +147,7 @@ public class JSONStore extends DataStore {
 				}
 				
 				// add to row result in correct order if part of result
-				if ( false == first.startsWith( "{\"#" ) ) {
+				if ( false == first.startsWith( "{#" ) ) {
 					// split entry into id and value
 					String[] pair = values[ j ].split( ":" );
 				
