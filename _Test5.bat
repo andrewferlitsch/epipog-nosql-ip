@@ -114,29 +114,12 @@ if %ERRORLEVEL% NEQ 0 ( echo FAILED stdout ) else ( echo PASSED  )
 find "United States,Oregon,Portland" stdout >tmp
 if %ERRORLEVEL% NEQ 1 ( echo FAILED stdout ) else ( echo PASSED  )
 find "Canada,Alberta,Banff" stdout >tmp
-if %ERRORLEVEL% NEQ 1 ( echo FAILED stdout ) else ( echo PASSED  
+if %ERRORLEVEL% NEQ 1 ( echo FAILED stdout ) else ( echo PASSED  )
 
 echo "Test: Linked List, one primary, psv store, second file with some duplicates"
 java query -i tests\5a.txt -Scountry:string32,state:string32,city:string32 -Pcountry -d psv
 IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
 java query -s "*" -d psv >stdout
-find "United States,Washington,Camas" stdout >tmp
-if %ERRORLEVEL% NEQ 0 ( echo FAILED stdout ) else ( echo PASSED  )
-find "Canada,Alberta,Calgary" stdout >tmp
-if %ERRORLEVEL% NEQ 0 ( echo FAILED stdout ) else ( echo PASSED  )
-find "Australia,Northwest Territories,Humpty Doo" stdout >tmp
-if %ERRORLEVEL% NEQ 0 ( echo FAILED stdout ) else ( echo PASSED  )
-find "United States,Oregon,Portland" stdout >tmp
-if %ERRORLEVEL% NEQ 1 ( echo FAILED stdout ) else ( echo PASSED  )
-find "Canada,Alberta,Banff" stdout >tmp
-if %ERRORLEVEL% NEQ 1 ( echo FAILED stdout ) else ( echo PASSED  )
-find "United States,Washington,Seattle" stdout >tmp
-if %ERRORLEVEL% NEQ 1 ( echo FAILED stdout ) else ( echo PASSED  )
-
-echo "Test: Linked List, one primary, json store, second file with some duplicates"
-java query -i tests\5a.txt -Scountry:string32,state:string32,city:string32 -Pcountry -d json
-IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
-java query -s "*" -d json >stdout
 find "United States,Washington,Camas" stdout >tmp
 if %ERRORLEVEL% NEQ 0 ( echo FAILED stdout ) else ( echo PASSED  )
 find "Canada,Alberta,Calgary" stdout >tmp
@@ -175,6 +158,23 @@ if %ERRORLEVEL% NEQ 0 ( echo FAILED stdout ) else ( echo PASSED  )
 find "United States,Oregon,Portland" stdout >tmp
 if %ERRORLEVEL% NEQ 1 ( echo FAILED stdout ) else ( echo PASSED  )
 find "Canada,Alberta,Banff" stdout >tmp
+if %ERRORLEVEL% NEQ 1 ( echo FAILED stdout ) else ( echo PASSED  )
+
+echo "Test: Linked List, one primary, json store, second file with some duplicates"
+java query -i tests\5a.txt -Scountry:string32,state:string32,city:string32 -Pcountry -d json
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+java query -s "*" -d json >stdout
+find "United States,Washington,Camas" stdout >tmp
+if %ERRORLEVEL% NEQ 0 ( echo FAILED stdout ) else ( echo PASSED  )
+find "Canada,Alberta,Calgary" stdout >tmp
+if %ERRORLEVEL% NEQ 0 ( echo FAILED stdout ) else ( echo PASSED  )
+find "Australia,Northwest Territories,Humpty Doo" stdout >tmp
+if %ERRORLEVEL% NEQ 0 ( echo FAILED stdout ) else ( echo PASSED  )
+find "United States,Oregon,Portland" stdout >tmp
+if %ERRORLEVEL% NEQ 1 ( echo FAILED stdout ) else ( echo PASSED  )
+find "Canada,Alberta,Banff" stdout >tmp
+if %ERRORLEVEL% NEQ 1 ( echo FAILED stdout ) else ( echo PASSED  )
+find "United States,Washington,Seattle" stdout >tmp
 if %ERRORLEVEL% NEQ 1 ( echo FAILED stdout ) else ( echo PASSED  )
 
 echo "Test: Linked Index, two primary, binary store"

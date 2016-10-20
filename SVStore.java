@@ -123,12 +123,14 @@ public class SVStore extends DataStore {
 		
 		// Read each pipe-separated line from storage
 		String line;
+		int nth = 0;
 		while ( null != ( line = ReadLine() ) ) {
 			row = new Data[ colOrder.length ];
 			String first = null;	// first column in record
 			int ncol = 0;			// current column position
 
 			// Split the line into columns
+			nth++; // increment the next sequential position of a record (row/document)
 			ArrayList<String> values = SVParse.Split( line, separator );
 			for ( String value : values  ) {
 				// Check if entry has been marked as dirty (###)
@@ -166,6 +168,13 @@ public class SVStore extends DataStore {
 							break;
 						}
 					}
+				}
+				// entry is marked as dirty
+				else
+				{
+					// skip to the position of the next entry
+					Move( index.Pos( nth ) );
+					continue; 
 				}
 				
 				ncol++;	// increment the column position
