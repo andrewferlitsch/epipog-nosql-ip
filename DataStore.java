@@ -292,6 +292,12 @@ public abstract class DataStore {
 	{
 		return schema.GetKeys();
 	}
+	
+	// Accessor Method: get type from the schema
+	public String GetType( String key )
+	{
+		return schema.GetType( key );
+	}
  
 	// Set Index Type
 	public void Index ( String type ) 

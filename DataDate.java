@@ -33,7 +33,9 @@ public class DataDate extends Data {
 	
 	// Implementation for equal operator for data type
 	public boolean EQ( Object v ) {
-		return ( Long ) value == ( ( DataDate ) v ).Get();
+		Long v1 = ( Long ) value;
+		Long v2 = ( ( DataDate ) v ).Get();
+		return v1 == v2;
 	}
 	
 	// Implementation for less than operator for data type

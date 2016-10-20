@@ -6,6 +6,8 @@ import java.nio.file.Paths;
 import java.nio.file.Files;
 import java.nio.charset.Charset;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 
 // Main entry for Query application
 public class epipog {
@@ -241,7 +243,6 @@ public class epipog {
 		Where where = null;
 		if ( null != fOption ) {
 			String[] filters = fOption.split( "," );
-			ArrayList<Pair<String,String>> fkeys = new ArrayList<Pair<String,String>>( filters.length );
 			
 			// Check the syntax of the filter arguments
 			for ( String filter : filters ) {
@@ -251,20 +252,39 @@ public class epipog {
 					System.err.println( usage );
 					System.exit( 1 );
 				}
-		
-				fkeys.add( new Pair<String,String>( pair[ 0 ], pair[ 1 ] ) );
-
+				
+				String type = dataStore.GetType( pair[ 0 ] );
+				if ( null == type ) {
+					System.err.println( "Key not found: " + pair[ 0 ] );
+					System.err.println( usage );
+					System.exit( 1 );
+				}
+				
 				// TODO: only doing one where
-				where = new Where(); where.op = Where.WhereOp.EQ; where.key = pair[ 0 ]; where.value = pair[ 1 ];
-			}
-			
-			try {
-				dataStore.checkKeyValArgs( fkeys );
-			}
-			catch ( IllegalArgumentException e ) {
-				System.err.println( e.getMessage() );
-				System.err.println( usage );
-				System.exit( 1 );
+				where = new Where(); where.op = Where.WhereOp.EQ; where.key = pair[ 0 ]; 
+				
+				try {
+					switch ( type ) {
+					case "string16"	: where.value = new DataString16(); 	where.value.Set( pair[ 1 ] ); break;
+					case "string32"	: where.value = new DataString32(); 	where.value.Set( pair[ 1 ] ); break;
+					case "string64"	: where.value = new DataString64(); 	where.value.Set( pair[ 1 ] ); break;
+					case "string128": where.value = new DataString128(); 	where.value.Set( pair[ 1 ] ); break;
+					case "integer"	: where.value = new DataInteger(); 		where.value.Set( Integer.parseInt( pair[ 1 ] ) ); break;
+					case "short"	: where.value = new DataShort(); 		where.value.Set( Short.parseShort( pair[ 1 ] ) ); break;
+					case "long"		: where.value = new DataLong(); 		where.value.Set( Long.parseLong( pair[ 1 ] ) ); break;
+					case "float"	: where.value = new DataFloat(); 		where.value.Set( Float.parseFloat( pair[ 1 ] ) ); break;
+					case "double"	: where.value = new DataDouble(); 		where.value.Set( Double.parseDouble( pair[ 1 ] ) ); break;
+					case "date"		: where.value = new DataDate(); 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+																			where.value.Set( format.parse( pair[ 1 ] ).getTime() ); break;
+					case "time"		: where.value = new DataTime(); 		format = new SimpleDateFormat("HH:ss");
+																			where.value.Set( format.parse( pair[ 1 ] ).getTime() ); break;
+					}
+				}
+				catch ( ParseException e ) {
+					System.err.println( "Invalid argument for find clause (-f): " + pair[ 1 ] );
+					System.err.println( usage );
+					System.exit( 1 );
+				}
 			}
 		}
 		

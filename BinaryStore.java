@@ -191,7 +191,7 @@ public class BinaryStore extends DataStore {
 						// matched key
 						if ( key.getKey().equals( where.key ) ) {
 							// value not matched
-						    if ( false == value.AsString().equals( where.value ) ) {
+							if ( !value.EQ( where.value ) ) {
 								 skip = true;
 								 break;
 							}

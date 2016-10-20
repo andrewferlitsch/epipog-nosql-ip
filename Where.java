@@ -1,9 +1,8 @@
 
-
-		
+// Class for Where Clause
 public class Where {
 	String  key;
-	String  value;	// TODO: should be converted to Data
+	Data   value;	
 	WhereOp op;
 	
 	public enum WhereOp {

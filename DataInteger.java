@@ -29,9 +29,11 @@ public class DataInteger extends Data {
 	
 	// Implementation for equal operator for data type
 	public boolean EQ( Object v ) {
-		return ( Integer ) value == ( ( DataInteger ) v ).Get();
+		int v1 = ( Integer ) value;
+		int v2 = ( ( DataInteger ) v ).Get();
+		return v1 == v2;
 	}
-	
+
 	// Implementation for less than operator for data type
 	public boolean LT( Object v ) {
 		return ( Integer ) value < ( ( DataInteger ) v ).Get();
