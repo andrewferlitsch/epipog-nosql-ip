@@ -361,12 +361,6 @@ public abstract class DataStore {
 	//	where: where clause for matching records
 	public abstract ArrayList<Data[]> Select( String[] keys, Where where ) throws IllegalArgumentException, StorageException;		
 
-	public abstract class Where {
-		
-	}
-	
-	// Method for sorting results
-	public void OrderBy() {}
 	
 	// Method for vacuuming a collection
 	public abstract void Vacuum();

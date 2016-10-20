@@ -165,6 +165,7 @@ public class BinaryStore extends DataStore {
 			}
 		
 			// Read each column according to data type
+			boolean skip = false;
 			for ( Pair<String,String> key : keys ) {
 				Data value = null;
 				switch ( key.getValue() )
@@ -182,17 +183,39 @@ public class BinaryStore extends DataStore {
 					case "time"  	: value = new DataTime();	   value.Set( ReadLong() ); break;
 				}
 
-				// add to row result in correct order if part of result
-				if ( 0x01 == dirty ) {
-					for ( int i = 0; i < colOrder.length; i++ ) {
-						if ( colOrder[ i ] == ncol ) {
-							row[ i ] = value;
-							break;
+				// Check where 
+				if ( null != where ) {
+					// TODO: only supports single where (equal only)
+					switch ( where.op ) {
+					case EQ: 
+						// matched key
+						if ( key.getKey().equals( where.key ) ) {
+							// value not matched
+						    if ( false == value.AsString().equals( where.value ) ) {
+								 skip = true;
+								 break;
+							}
 						}
+						break;
+					}
+					
+					// TODO: should jump to next row on skip (unmatched where), but needs an index always
+				}
+
+				// add to row result in correct order if part of result
+				for ( int i = 0; i < colOrder.length; i++ ) {
+					if ( colOrder[ i ] == ncol ) {
+						row[ i ] = value;
+						break;
 					}
 				}
 				
 				ncol++;	// increment the column position
+			}
+			
+			// did not match where clause
+			if ( true == skip ) {
+				continue;
 			}
 			
 			// Add the row to the result

@@ -1,0 +1,9 @@
+country,state,city,pop,census
+United States, Oregon, Portland,1000000,2010-01-01
+United States, Oregon, Salem,200000,2010-01-01
+United States, Washington, Seattle,2000000,2010-01-04
+Canada, British Columbia, Vancouver,150000,2012-01-01
+Canada, Alberta, Banff,120000,2012-02-01
+Canada, Alberta, Calgary,1500000,2012-02-03
+Australia, Northwest Territories, Humpty Doo, 5000, 2013-02-07
+United States, Washington, Camas, 40000, 2010-01-02

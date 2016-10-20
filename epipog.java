@@ -75,6 +75,12 @@ public class epipog {
 			}
 		}
 		
+		if ( getOptIndex != args.length ) {
+			System.err.println( "Invalid argument: " + args[ getOptIndex ] );
+			System.err.println( usage );
+			System.exit( 1 );
+		}
+		
 		// Check for valid cache size option
 		try {
 			cacheSize = Integer.parseInt( cOption );
@@ -232,6 +238,7 @@ public class epipog {
 		}
 		
 		// filter (where)
+		Where where = null;
 		if ( null != fOption ) {
 			String[] filters = fOption.split( "," );
 			ArrayList<Pair<String,String>> fkeys = new ArrayList<Pair<String,String>>( filters.length );
@@ -246,6 +253,9 @@ public class epipog {
 				}
 		
 				fkeys.add( new Pair<String,String>( pair[ 0 ], pair[ 1 ] ) );
+				
+				// TODO: only doing one where
+				where = new Where(); where.op = Where.WhereOp.EQ; where.key = pair[ 0 ]; where.value = pair[ 1 ];
 			}
 			
 			try {
@@ -256,7 +266,6 @@ public class epipog {
 				System.err.println( usage );
 				System.exit( 1 );
 			}
-			// TODO finish functionality
 		}
 		
 		ArrayList<Data[]> result = null;	// query results
@@ -269,7 +278,7 @@ public class epipog {
 				sKeys[ j ] = sKeys[ j ].toLowerCase();
 			
 			try {
-				result = dataStore.Select( sKeys, null );
+				result = dataStore.Select( sKeys, where );
 			}
 			catch ( StorageException e ) {
 				System.err.println( "Cannot select from datastore" );
