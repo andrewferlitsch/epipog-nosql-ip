@@ -27,6 +27,12 @@ public abstract class Index {
 	//	not -1 : found and removed
 	protected abstract long Remove( long hash );
 	
+	// Method to return the position in storage of the nth record (row/document)
+	// Return
+	//	-1 : no such element
+	//  >0 : storage position
+	public abstract long Pos( int nth );
+	
 	// Method for getting in-memory index
 	public abstract Object Index();
 	

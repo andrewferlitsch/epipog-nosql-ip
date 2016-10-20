@@ -4,12 +4,12 @@ import java.util.ArrayList;
 // Abstract Layer for Accessing DataStore
 //
 public abstract class DataStore { 
-	protected String collectionName = null;	// name of the data collection group
-	protected Schema schema;				// the dynamic schema definition for the collection	
-	protected String[] primary = null;		// dynamic primary key(s) definition
+	protected String   collectionName = null;	// name of the data collection group
+	protected Schema   schema;					// the dynamic schema definition for the collection	
+	protected String[] primary = null;			// dynamic primary key(s) definition 
+	protected Index    index = null;			// index of primary key(s)
 
-	private   Storage storage = null;		// data storage 
-	private   Index index = null;			// index of primary key(s)
+	private   Storage  storage = null;			// data storage
 	
 	// Constructor
 	public DataStore( String _collectionName )

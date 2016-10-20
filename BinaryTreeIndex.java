@@ -39,6 +39,16 @@ public class BinaryTreeIndex extends Index {
 		throw new UnsupportedOperationException( "BinaryIndex.Remove" );	
 	}
 	
+	// Implementation to return the position in storage of the nth record (row/document)
+	// Return
+	//	-1 : no such element
+	//  >0 : storage position
+	public long Pos( int nth ) 
+		throws UnsupportedOperationException
+	{
+		throw new UnsupportedOperationException( "BinaryIndex.Pos" );
+	}
+	
 	// Method for getting in-memory index
 	public Object Index()
 		throws UnsupportedOperationException

@@ -147,13 +147,22 @@ public class BinaryStore extends DataStore {
 		Begin();
 		
 		// Read each record in storage
-		// TODO: should use index to jump to position of next record. If dirty, then skip reading
+		//
+		int nth = 0;
 		while ( !Eof() ) {
 			row = new Data[ colOrder.length ];
 			int ncol = 0;			// current column position
 			
 			// First byte indicates if entry is dirty( is dirty == 0x0 )
 			byte dirty = ReadByte();
+			
+			nth++;	// increment the next sequential position of a record (row/document)
+			// entry is marked as dirty
+			if ( 0x0 == dirty ) {
+				// skip to the position of the next entry
+				Move( index.Pos( nth ) );
+				continue; 
+			}
 		
 			// Read each column according to data type
 			for ( Pair<String,String> key : keys ) {
@@ -185,10 +194,6 @@ public class BinaryStore extends DataStore {
 				
 				ncol++;	// increment the column position
 			}
-			
-			// entry is marked as dirty
-			if ( 0x0 == dirty )
-				continue;
 			
 			// Add the row to the result
 			result.add( row );
