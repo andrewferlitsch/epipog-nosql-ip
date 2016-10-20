@@ -131,9 +131,8 @@ public class JSONStore extends DataStore {
 			int ncol = 0;			// current column position
 			
 			// Split the line into columns
-			// TODO: parse using JSON object
-			String[] values = line.split( "," );
-			//String[] values = SVParse.Split( line, ',' );
+			ArrayList<String> vl = SVParse.Split( line, ',' );
+			String[] values = vl.toArray( new String[ vl.size() ] );
 			
 			for ( int j = 0; j < values.length; j++ ) {
 				// Check if entry has been marked as dirty ({"#)
@@ -144,7 +143,7 @@ public class JSONStore extends DataStore {
 				}
 				// Last column
 				else if ( j == values.length - 1 ) {
-					values[ j ] = values[ j ].substring( 0, values[ j ].length() - 2 );	// drop trailing }
+					values[ j ] = values[ j ].substring( 0, values[ j ].length() - 1 );	// drop trailing }
 				}
 				
 				// add to row result in correct order if part of result

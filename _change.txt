@@ -10,8 +10,4 @@
 
 7. Does not handle non-ASCII characters
 
-8.	In the Select() method of BinaryStore, should use index to jump to position of next record. If dirty, then skip reading.
-
-9.	In the Select() method of JSONStore, should use JSONObject parser (instead of hand written).
-
 10.	Add config file for default settings

@@ -226,4 +226,13 @@ IF %ERRORLEVEL% NEQ 1 (  echo FAILED rc ) else ( echo PASSED )
 find "No schema" stderr >stdout
 if %ERRORLEVEL% NEQ 0 ( echo FAILED stderr ) else ( echo PASSED )
 
+
+echo "Test: Simple CSV input, commas in rows, JSON store"
+del \tmp\tmp.*
+java query -i tests\2e.txt -F csv -d json -Scountry:string32,state:string32,city:string32
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+java query -s country -d json >stdout
+find "United States, The" stdout >tmp
+if %ERRORLEVEL% NEQ 0 ( echo FAILED stdout ) else ( echo PASSED )
+
 del stdout stderr data
