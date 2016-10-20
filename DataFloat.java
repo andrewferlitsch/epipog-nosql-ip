@@ -26,6 +26,11 @@ public class DataFloat extends Data {
 		return String.valueOf( (Float) value );
 	}
 	
+	// Implementation for equal operator for data type
+	public boolean EQ( Object v ) {
+		return ( Float ) value == ( ( DataFloat ) v ).Get();
+	}
+	
 	// Implementation for less than operator for data type
 	public boolean LT( Object v ) {
 		return ( Float ) value < ( ( DataFloat ) v ).Get();
@@ -34,5 +39,15 @@ public class DataFloat extends Data {
 	// Implementation for greater than operator for data type
 	public boolean GT( Object v ) {
 		return ( Float ) value > ( ( DataFloat ) v ).Get();
+	}
+	
+	// Implementation for less than or equal operator for data type
+	public boolean LE( Object v ) {
+		return ( Float ) value <= ( ( DataFloat ) v ).Get();
+	}
+	
+	// Implementation for greater than or equal operator for data type
+	public boolean GE( Object v ) {
+		return ( Float ) value >= ( ( DataFloat ) v ).Get();
 	}
 }

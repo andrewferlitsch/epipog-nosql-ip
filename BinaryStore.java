@@ -61,6 +61,7 @@ public class BinaryStore extends DataStore {
 					case "string64"	: Write( (String) value, 64  ); break;
 					case "string128": Write( (String) value, 128 ); break;
 					case "short"    : Write( (Short) value ); 		break;
+					case "byte"		: Write( (Byte) value );		break;
 					case "integer"  : Write( (Integer) value ); 	break;
 					case "long"     : Write( (Long) value ); 		break;
 					case "float"    : Write( (Float) value );		break;

@@ -22,9 +22,18 @@ public abstract class Data {
 	// Method for string representation of the data item
 	public abstract String AsString();
 	
+	// Method for equal operator for data type
+	public abstract boolean EQ( Object v );
+	
 	// Method for less than operator for data type
 	public abstract boolean LT( Object v );
 	
 	// Method for greater than operator for data type
 	public abstract boolean GT( Object v );
+	
+	// Method for less than or equal operator for data type
+	public abstract boolean LE( Object v );
+	
+	// Method for greater than or equal operator for data type
+	public abstract boolean GE( Object v );
 }

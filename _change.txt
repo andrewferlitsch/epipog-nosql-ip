@@ -2,8 +2,6 @@
 
 2. Byte data type not properly handled. Perhaps it should be a char data type
 
-3. Use standard getopts() instead of handwritten one.
-
 4. Index does not handle collisions
 
 5. Cannot do multi-level sorting

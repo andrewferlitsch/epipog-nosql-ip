@@ -31,6 +31,11 @@ public class DataDate extends Data {
 		return df.format( new Date( ( Long ) value ) );
 	}
 	
+	// Implementation for equal operator for data type
+	public boolean EQ( Object v ) {
+		return ( Long ) value == ( ( DataDate ) v ).Get();
+	}
+	
 	// Implementation for less than operator for data type
 	public boolean LT( Object v ) {
 		return ( Long ) value < ( ( DataDate ) v ).Get();
@@ -39,5 +44,15 @@ public class DataDate extends Data {
 	// Implementation for greater than operator for data type
 	public boolean GT( Object v ) {
 		return ( Long ) value > ( ( DataDate ) v ).Get();
+	}
+	
+	// Implementation for less than operator or equal for data type
+	public boolean LE( Object v ) {
+		return ( Long ) value <= ( ( DataDate ) v ).Get();
+	}
+	
+	// Implementation for greater than operator or equal for data type
+	public boolean GE( Object v ) {
+		return ( Long ) value >= ( ( DataDate ) v ).Get();
 	}
 }

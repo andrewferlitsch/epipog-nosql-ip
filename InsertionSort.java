@@ -19,7 +19,14 @@ public class InsertionSort extends Sort {
 		for ( String key : keys ) {
 			Data[] temp;	// holds the interchanged element row
 			
-			int ncol = dataStore.schema.GetColumnPosition( key );
+			// Use first row (header) in result to get order of keys in result
+			int ncol = -1;
+			for ( int i = 0; i < result.get( 0 ).length; i++ ) {
+				if ( ((String)result.get( 0 )[ i ].Get()).compareTo( key ) == 0 ) {
+					ncol = i;
+					break;
+				}
+			}
 			
 			int length = result.size();
 			for (int i = 2; i < length; i++) {	// start at row 2 (1 is the heading)

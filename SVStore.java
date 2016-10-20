@@ -148,6 +148,7 @@ public class SVStore extends DataStore {
 									case "string32" : row[ i ] = new DataString32();	row[ i ].Set( value ); break;
 									case "string64" : row[ i ] = new DataString64();	row[ i ].Set( value ); break;
 									case "string128": row[ i ] = new DataString128();	row[ i ].Set( value ); break;
+									case "byte"		: row[ i ] = new DataByte();   		row[ i ].Set( Byte.parseByte( value ) ); break;
 									case "short"	: row[ i ] = new DataShort();   	row[ i ].Set( Short.parseShort( value ) ); break;
 									case "integer"	: row[ i ] = new DataInteger(); 	row[ i ].Set( Integer.parseInt( value ) ); break;
 									case "long"		: row[ i ] = new DataLong();		row[ i ].Set( Long.parseLong( value ) ); break;

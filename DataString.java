@@ -23,6 +23,11 @@ public abstract class DataString extends Data {
 	}
 	
 	// Implementation for less than operator for String
+	public boolean EQ( Object v ) {
+		return ( ( ( String ) value ).compareTo( ( ( DataString ) v ).Get() ) ) == 0 ? true : false;
+	}
+	
+	// Implementation for less than operator for String
 	public boolean LT( Object v ) {
 		return ( ( ( String ) value ).compareTo( ( ( DataString ) v ).Get() ) ) < 0 ? true : false;
 	}
@@ -30,5 +35,15 @@ public abstract class DataString extends Data {
 	// Implementation for greater than operator for String
 	public boolean GT( Object v ) {
 		return ( ( ( String ) value ).compareTo( ( ( DataString ) v ).Get() ) ) > 0 ? true : false;
+	}
+	
+	// Implementation for less than or equal operator for String
+	public boolean LE( Object v ) {
+		return ( ( ( String ) value ).compareTo( ( ( DataString ) v ).Get() ) ) <= 0 ? true : false;
+	}
+	
+	// Implementation for greater than or equal operator for String
+	public boolean GE( Object v ) {
+		return ( ( ( String ) value ).compareTo( ( ( DataString ) v ).Get() ) ) >= 0 ? true : false;
 	}
 }

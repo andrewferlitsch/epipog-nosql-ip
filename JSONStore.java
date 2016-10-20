@@ -135,7 +135,6 @@ public class JSONStore extends DataStore {
 			String[] values = line.split( "," );
 			//String[] values = SVParse.Split( line, ',' );
 			
-			//for ( String value : values  ) {
 			for ( int j = 0; j < values.length; j++ ) {
 				// Check if entry has been marked as dirty ({"#)
 				if ( null == first ) {
@@ -171,19 +170,10 @@ public class JSONStore extends DataStore {
 									case "string32" : row[ i ] = new DataString32();	row[ i ].Set( values[ j ] ); break;
 									case "string64" : row[ i ] = new DataString64();	row[ i ].Set( values[ j ] ); break;
 									case "string128": row[ i ] = new DataString128();	row[ i ].Set( values[ j ] ); break;
-									case "short"	: row[ i ] = new DataShort();   	if ( values[ j ].startsWith( "0x") || values[ j ].startsWith( "0X") )
-																							row[ i ].Set( Short.parseShort( values[ j ].substring( 2 ), 16 ) ); 
-																						else
-																							row[ i ].Set( Short.parseShort( values[ j ] ) );
-																						break;
-									case "integer"	: row[ i ] = new DataInteger(); 	if ( values[ j ].startsWith( "0x") || values[ j ].startsWith( "0X") )
-																							row[ i ].Set( Integer.parseInt( values[ j ].substring( 2 ), 16 ) ); 
-																						else
-																							row[ i ].Set( Integer.parseInt( values[ j ] ) ); break;
-									case "long"		: row[ i ] = new DataLong();		if ( values[ j ].startsWith( "0x") || values[ j ].startsWith( "0X") )
-																							row[ i ].Set( Long.parseLong( values[ j ].substring( 2 ), 16 ) ); 
-																						else
-																							row[ i ].Set( Long.parseLong( values[ j ] ) ); break;
+									case "byte"		: row[ i ] = new DataByte();		row[ i ].Set( Byte.parseByte( values[ j ] ) ); break;
+									case "short"	: row[ i ] = new DataShort();   	row[ i ].Set( Short.parseShort( values[ j ] ) ); break;
+									case "integer"	: row[ i ] = new DataInteger(); 	row[ i ].Set( Integer.parseInt( values[ j ] ) ); break;
+									case "long"		: row[ i ] = new DataLong();		row[ i ].Set( Long.parseLong( values[ j ] ) ); break;
 									case "float"	: row[ i ] = new DataFloat();		row[ i ].Set( Float.parseFloat( values[ j ] ) ); break;
 									case "double"	: row[ i ] = new DataDouble(); 		row[ i ].Set( Double.parseDouble( values[ j ] ) ); break;
 									case "date"		: row[ i ] = new DataDate();		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");

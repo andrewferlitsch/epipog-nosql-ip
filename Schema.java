@@ -43,6 +43,7 @@ public class Schema {
 				case "string32"	:
 				case "string64"	:
 				case "string128":
+				case "byte"		:
 				case "short"	:
 				case "integer"	:
 				case "long"		:
@@ -124,6 +125,7 @@ public class Schema {
 					case "string32" :
 					case "string64" :
 					case "string128": return value;
+					case "byte"	    : return Byte.parseByte( value );
 					case "short"	: return Short.parseShort( value );
 					case "integer"  : return Integer.parseInt( value );
 					case "long"		: return Long.parseLong( value );

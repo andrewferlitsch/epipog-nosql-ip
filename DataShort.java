@@ -27,6 +27,11 @@ public class DataShort extends Data {
 		return String.valueOf( ( Short ) value );
 	}
 	
+	// Implementation for equal operator for data type
+	public boolean EQ( Object v ) {
+		return ( Short ) value == ( ( DataShort ) v ).Get();
+	}
+	
 	// Implementation for less than operator for data type
 	public boolean LT( Object v ) {
 		return ( Short ) value < ( ( DataShort ) v ).Get();
@@ -35,5 +40,15 @@ public class DataShort extends Data {
 	// Implementation for greater than operator for data type
 	public boolean GT( Object v ) {
 		return ( Short ) value > ( ( DataShort ) v ).Get();
+	}
+	
+	// Implementation for less than or equal operator for data type
+	public boolean LE( Object v ) {
+		return ( Short ) value <= ( ( DataShort ) v ).Get();
+	}
+	
+	// Implementation for greater than or equal operator for data type
+	public boolean GE( Object v ) {
+		return ( Short ) value >= ( ( DataShort ) v ).Get();
 	}
 }

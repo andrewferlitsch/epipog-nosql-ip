@@ -26,6 +26,11 @@ public class DataLong extends Data {
 		return String.valueOf( ( Long ) value );
 	}
 	
+	// Implementation for equal operator for data type
+	public boolean EQ( Object v ) {
+		return ( Long ) value == ( ( DataLong ) v ).Get();
+	}
+	
 	// Implementation for less than operator for data type
 	public boolean LT( Object v ) {
 		return ( Long ) value < ( ( DataLong ) v ).Get();
@@ -34,5 +39,15 @@ public class DataLong extends Data {
 	// Implementation for greater than operator for data type
 	public boolean GT( Object v ) {
 		return ( Long ) value > ( ( DataLong ) v ).Get();
+	}
+	
+	// Implementation for less than or equal operator for data type
+	public boolean LE( Object v ) {
+		return ( Long ) value <= ( ( DataLong ) v ).Get();
+	}
+	
+	// Implementation for greater than or equal operator for data type
+	public boolean GE( Object v ) {
+		return ( Long ) value >= ( ( DataLong ) v ).Get();
 	}
 }

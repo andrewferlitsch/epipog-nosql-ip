@@ -163,4 +163,22 @@ IF %ERRORLEVEL% NEQ 1 (  echo FAILED rc ) else ( echo PASSED )
 find "Value too long for string32 data type: United Kingdom of Great Britain and Northern Ireland" stderr >stdout
 if %ERRORLEVEL% NEQ 0 ( echo FAILED stderr ) else ( echo PASSED )
 
+echo "Test: CSV, incorrect data type for string64"
+del \tmp\tmp.*
+java query -i tests\4h.txt -Scountry:string64,state:string16 -F csv 2>stderr
+IF %ERRORLEVEL% NEQ 1 (  echo FAILED rc ) else ( echo PASSED )
+find "Value too long for string64 data type: " stderr >stdout
+if %ERRORLEVEL% NEQ 0 ( echo FAILED stderr ) else ( echo PASSED )
+
+echo "Test: CSV, incorrect data type for string128"
+del \tmp\tmp.*
+java query -i tests\4i.txt -Scountry:string128,state:string16 -F csv 2>stderr
+IF %ERRORLEVEL% NEQ 1 (  echo FAILED rc ) else ( echo PASSED )
+find "Value too long for string128 data type: " stderr >stdout
+if %ERRORLEVEL% NEQ 0 ( echo FAILED stderr ) else ( echo PASSED )
+
+echo "Test: CSV, incorrect data type for byte"
+del \tmp\tmp.*
+java query -i tests\4j.txt -Sname:string16,status:byte -F csv 2>stderr
+
 del tmp stdout stderr
