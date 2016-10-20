@@ -55,28 +55,28 @@ public class epipog {
 		
 		// Parse the command line arguments
 		char opt;
-		while ( ( opt = GetOpt( args, "c:C:d:f:F:i:I:no:O:P:s:S:t:V" ) ) != (char)-1 ) {
+		while ( ( opt = GetOpt.Parse( args, "c:C:d:f:F:i:I:no:O:P:s:S:t:V", usage ) ) != (char)-1 ) {
 			switch ( opt ) {
-			case 'c': cOption = optarg; break;
-			case 'C': COption = optarg; break;
-			case 'd': dOption = optarg; break;
-			case 'f': fOption = optarg; break;
-			case 'F': FOption = optarg; break;
-			case 'i': iOption = optarg; break;
-			case 'I': IOption = optarg; break;
+			case 'c': cOption = GetOpt.Arg(); break;
+			case 'C': COption = GetOpt.Arg(); break;
+			case 'd': dOption = GetOpt.Arg(); break;
+			case 'f': fOption = GetOpt.Arg(); break;
+			case 'F': FOption = GetOpt.Arg(); break;
+			case 'i': iOption = GetOpt.Arg(); break;
+			case 'I': IOption = GetOpt.Arg(); break;
 			case 'n': nOption = true;   break;
-			case 'o': oOption = optarg; break;
-			case 'O': OOption = optarg; break;
-			case 'P': POption = optarg; break;
-			case 's': sOption = optarg; break;
-			case 'S': SOption = optarg; break;
-			case 't': tOption = optarg; break;
+			case 'o': oOption = GetOpt.Arg(); break;
+			case 'O': OOption = GetOpt.Arg(); break;
+			case 'P': POption = GetOpt.Arg(); break;
+			case 's': sOption = GetOpt.Arg(); break;
+			case 'S': SOption = GetOpt.Arg(); break;
+			case 't': tOption = GetOpt.Arg(); break;
 			case 'V': VOption = true;   break;
 			}
 		}
 		
-		if ( getOptIndex != args.length ) {
-			System.err.println( "Invalid argument: " + args[ getOptIndex ] );
+		if ( GetOpt.Index() != args.length ) {
+			System.err.println( "Invalid argument: " + args[ GetOpt.Index() ] );
 			System.err.println( usage );
 			System.exit( 1 );
 		}
@@ -253,7 +253,7 @@ public class epipog {
 				}
 		
 				fkeys.add( new Pair<String,String>( pair[ 0 ], pair[ 1 ] ) );
-				
+
 				// TODO: only doing one where
 				where = new Where(); where.op = Where.WhereOp.EQ; where.key = pair[ 0 ]; where.value = pair[ 1 ];
 			}
@@ -353,66 +353,5 @@ public class epipog {
 		}
 		
 		System.exit( 0 );
-	}
-	
-	// Getopt() command line parser
-	static String optarg = null;	// argument for option
-	static int getOptIndex = 0;		// current index in argument list
-	
-	// 	argv	: argument list
-	//	parse	: option/arg to parse
-	static private char GetOpt( String[] argv, String parse ) {
-		// End of Argument List
-		if ( getOptIndex >= argv.length ) {
-			return (char) -1;
-		}
-		
-		// Next argument is not an option
-		if ( argv[ getOptIndex ].charAt( 0 ) != '-' ) {
-			return (char) -1;
-		}
-		
-		// Stray comma, no option follows
-		if ( argv[ getOptIndex ].length() < 2 ) {
-			System.err.println( "Invalid argument, no option letter follows comma" );
-			System.err.print( usage );
-			System.exit( 1 );
-			return (char) -1;
-		}
-		
-		// Not a valid option character after comma
-		int opt = parse.indexOf( String.valueOf( argv[ getOptIndex ].charAt( 1 ) ) );
-		if ( -1 == opt ) {
-			System.err.println( "Invalid option: -" +  argv[ getOptIndex ].charAt( 1 ) );
-			System.err.print( usage );
-			System.exit( 1 );
-			return (char)-1;
-		}
-		
-		if ( parse.length() > opt + 1 ) {
-			// option requires an argument
-			if ( parse.charAt( opt + 1 ) == ':' ) {
-				// argument follows option w/o space
-				if ( argv[ getOptIndex ].length() > 2 ) {
-					optarg = argv[ getOptIndex ].substring( 2 );
-					return argv[ getOptIndex++ ].charAt( 1 );
-				}
-				// argument follows option with space
-				else if ( getOptIndex + 1 < argv.length &&
-				          argv[ getOptIndex + 1 ].charAt( 0 ) != '-' ) {
-					getOptIndex += 2;
-					optarg = argv[ getOptIndex - 1 ];
-					return argv[ getOptIndex - 2 ].charAt( 1 );	  
-				}
-				// No argument follows option
-				System.err.println( "Missing argument for -" + argv[ getOptIndex ].charAt( 1 ) + " option" );
-				System.err.print( usage );
-				System.exit( 1 );
-				return (char) -1;
-			}
-		}
-		
-		// current option parsed
-		return argv[ getOptIndex++ ].charAt( 1 );	
 	}
 }
