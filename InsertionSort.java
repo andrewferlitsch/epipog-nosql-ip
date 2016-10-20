@@ -28,6 +28,10 @@ public class InsertionSort extends Sort {
 				}
 			}
 			
+			// Check if key is in the result
+			if ( -1 == ncol )
+				throw new IllegalArgumentException( "Sort key not in result: " + key );
+			
 			int length = result.size();
 			for (int i = 2; i < length; i++) {	// start at row 2 (1 is the heading)
 				for(int j = i ; j > 1 ; j--){

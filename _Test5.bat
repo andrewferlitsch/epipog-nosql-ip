@@ -230,3 +230,5 @@ find "United States,Oregon,Portland" stdout >tmp
 if %ERRORLEVEL% NEQ 1 ( echo FAILED stdout ) else ( echo PASSED  )
 find "Canada,Alberta,Banff" stdout >tmp
 if %ERRORLEVEL% NEQ 1 ( echo FAILED stdout ) else ( echo PASSED  )
+
+del tmp stdout stderr

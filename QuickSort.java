@@ -18,8 +18,19 @@ public class QuickSort extends Sort {
 		// Sort for each key
 		for ( String key : keys ) {
 			Data[] temp;	// holds the interchanged element row
-			
-			int ncol = dataStore.schema.GetColumnPosition( key );
+		
+			// Use first row (header) in result to get order of keys in result
+			int ncol = -1;
+			for ( int i = 0; i < result.get( 0 ).length; i++ ) {
+				if ( ((String)result.get( 0 )[ i ].Get()).compareTo( key ) == 0 ) {
+					ncol = i;
+					break;
+				}
+			}
+
+			// Check if key is in the result
+			if ( -1 == ncol )
+				throw new IllegalArgumentException( "Sort key not in result: " + key );
 			
 			// Sort the outermost partition ( note, skip index 0 because this is the heading)
 			QuickSort( ncol, 1, result.size() - 1 );
@@ -33,8 +44,7 @@ public class QuickSort extends Sort {
         int j = higherIndex;
 		
 		// find the pivot number ( middle index )
-		Data pivot = result.get( lowerIndex + (higherIndex-lowerIndex) / 2 )[ ncol ];
-		
+		Data pivot = result.get( lowerIndex + (higherIndex-lowerIndex) / 2 )[ ncol ];	
 		// Divide into two partitions
         while ( i <= j ) {
             /**
