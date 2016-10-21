@@ -1,0 +1,4 @@
+name,status
+bob,1
+sally,A
+john,ABC
