@@ -256,7 +256,7 @@ public class epipog {
 					where.op = Where.WhereOp.LE; 
 				}
 				else if ( filter.contains( ">=" ) ) {
-					pair = filter.split( "<" );
+					pair = filter.split( ">=" );
 					where.op = Where.WhereOp.GE; 
 				}
 				else if ( filter.contains( "!=" ) ) {
