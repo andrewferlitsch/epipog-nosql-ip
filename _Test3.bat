@@ -140,6 +140,7 @@ find "Washington,200000,Vancouver" stdout >tmp
 if %ERRORLEVEL% NEQ 0 ( echo FAILED stdout ) else ( echo PASSED )
 
 echo "Test: binary store, invalid collection"
+del \tmp\foo.*
 java epipog -s city -C foo 2>stderr
 IF %ERRORLEVEL% NEQ 1 (  echo FAILED rc ) else ( echo PASSED )
 find "No schema" stderr >stdout

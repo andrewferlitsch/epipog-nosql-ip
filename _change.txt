@@ -12,4 +12,6 @@
 
 10.	Add config file for default settings
 
-12. Null ptr error on -f arg when there is no collection
+13. Fix -f not working on blank integer fields
+
+14. cityzip throws exception on select for json datastore
