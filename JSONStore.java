@@ -125,6 +125,7 @@ public class JSONStore extends DataStore {
 		
 		// Read each pipe-separated line from storage
 		String line;
+		int nth = 0;
 		while ( null != ( line = ReadLine() ) ) {
 			row = new Data[ colOrder.length ];
 			String first = null;	// first column in record
@@ -133,7 +134,8 @@ public class JSONStore extends DataStore {
 			// Split the line into columns
 			ArrayList<String> vl = SVParse.Split( line, ',' );
 			String[] values = vl.toArray( new String[ vl.size() ] );
-
+			
+			nth++; // increment the next sequential position of a record (row/document)
 			boolean skip = false;
 			for ( int j = 0; j < values.length; j++ ) {
 				// Check if entry has been marked as dirty ({"#)
@@ -190,18 +192,47 @@ public class JSONStore extends DataStore {
 							// Check where 
 							if ( null != where ) {
 								// TODO: only supports single where (equal only)
-								switch ( where.op ) {
-								case EQ: 
-									// matched key
-									if ( keys.get( ncol ).getKey().equals( where.key ) ) {
-										// value not matched
+								
+								// matched key
+								if ( keys.get( ncol ).getKey().equals( where.key ) ) {
+									switch ( where.op ) {
+									case EQ: 
 										if ( !row[ i ].EQ( where.value ) ) {
-											 skip = true;
-											 break;
+											skip = true; // value not matched
+											break;
 										}
+										break;
+									case LT: 
+										if ( !row[ i ].LT( where.value ) ) {
+											skip = true; // value not matched
+											break;
+										}
+										break;
+									case GT: 
+										if ( !row[ i ].GT( where.value ) ) {
+											skip = true; // value not matched
+											break;
+										}
+										break;;
+									case LT: 
+										if ( !row[ i ].LT( where.value ) ) {
+											skip = true; // value not matched
+											break;
+										}
+										break;;
+									case LE: 
+										if ( !row[ i ].LE( where.value ) ) {
+											skip = true; // value not matched
+											break;
+										}
+										break;;
+									case GE: 
+										if ( !row[ i ].GE( where.value ) ) {
+											skip = true; // value not matched
+											break;
+										}
+										break;
 									}
-
-									break;
 								}
 				
 								// TODO: should jump to next row on skip (unmatched where), but needs an index always
@@ -209,6 +240,13 @@ public class JSONStore extends DataStore {
 							break;
 						}
 					}
+				}
+				// entry is marked as dirty
+				else
+				{
+					// skip to the position of the next entry
+					Move( index.Pos( nth ) );
+					continue; 
 				}
 
 				ncol++;	// increment the column position

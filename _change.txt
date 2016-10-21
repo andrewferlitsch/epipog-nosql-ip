@@ -11,3 +11,4 @@
 7. Does not handle non-ASCII characters
 
 10.	Add config file for default settings
+

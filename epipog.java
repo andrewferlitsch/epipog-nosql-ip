@@ -246,7 +246,29 @@ public class epipog {
 			
 			// Check the syntax of the filter arguments
 			for ( String filter : filters ) {
+				where = new Where();	// allocate a filter object
+				
 				String[] pair = filter.split( "=" );
+				if ( filter.contains( "=" ) ) {
+					pair = filter.split( "=" );
+					where.op = Where.WhereOp.EQ; 
+				}
+				else if ( filter.contains( "<" ) ) {
+					pair = filter.split( "<" );
+					where.op = Where.WhereOp.LT; 
+				}
+				else if ( filter.contains( ">" ) ) {
+					pair = filter.split( ">" );
+					where.op = Where.WhereOp.GT; 
+				}
+				else if ( filter.contains( "<=" ) ) {
+					pair = filter.split( "<=" );
+					where.op = Where.WhereOp.LE; 
+				}
+				else if ( filter.contains( ">=" ) ) {
+					pair = filter.split( "<" );
+					where.op = Where.WhereOp.GE; 
+				}
 				if ( pair.length != 2 ) {
 					System.err.println( "Malformed argument for filter (-f): " + filter );
 					System.err.println( usage );
@@ -261,7 +283,7 @@ public class epipog {
 				}
 				
 				// TODO: only doing one where
-				where = new Where(); where.op = Where.WhereOp.EQ; where.key = pair[ 0 ]; 
+				where.key = pair[ 0 ]; 
 				
 				try {
 					switch ( type ) {

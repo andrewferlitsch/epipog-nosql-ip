@@ -186,19 +186,42 @@ public class BinaryStore extends DataStore {
 				// Check where 
 				if ( null != where ) {
 					// TODO: only supports single where (equal only)
-					switch ( where.op ) {
-					case EQ: 
-						// matched key
-						if ( key.getKey().equals( where.key ) ) {
-							// value not matched
-							if ( !value.EQ( where.value ) ) {
-								 skip = true;
-								 break;
-							}
-						}
-						break;
-					}
 					
+					// matched key
+					if ( key.getKey().equals( where.key ) ) {
+						switch ( where.op ) {
+						case EQ: 
+							if ( !value.EQ( where.value ) ) {
+								skip = true; // value not matched
+								break;
+							}
+							break;
+						case LT: 
+							if ( !value.LT( where.value ) ) {
+								skip = true; // value not matched
+								break;
+							}
+							break;
+						case GT: 
+							if ( !value.GT( where.value ) ) {
+								skip = true; // value not matched
+								break;
+							}
+							break;
+						case LE: 
+							if ( !value.LE( where.value ) ) {
+								skip = true; // value not matched
+								break;
+							}
+							break;
+						case GE: 
+							if ( !value.GE( where.value ) ) {
+								skip = true; // value not matched
+								break;
+							}
+							break;
+						}
+					}
 					// TODO: should jump to next row on skip (unmatched where), but needs an index always
 				}
 
