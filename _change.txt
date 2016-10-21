@@ -12,3 +12,4 @@
 
 10.	Add config file for default settings
 
+12. Null ptr error on -f arg when there is no collection
