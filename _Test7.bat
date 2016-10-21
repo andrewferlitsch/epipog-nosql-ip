@@ -736,13 +736,13 @@ IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
 echo "Test: Binary store: single key!=value, date"
 java epipog -s "*" -f "census!=2012-01-01" >stdout
 IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
-fc stdout tests\7w.cmp >tmp
+fc stdout tests\7cc.cmp >tmp
 IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
 
 echo "Test: Binary store: single key!=value, string"
-java epipog -s "*" -f "state!=B" >stdout
+java epipog -s "*" -f "state!=Oregon" >stdout
 IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
-fc stdout tests\7x.cmp >tmp
+fc stdout tests\7dd.cmp >tmp
 IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
 
 echo "Test: Binary store: single key!=value long value"
@@ -750,7 +750,7 @@ del \tmp\tmp.*
 java epipog -i tests\7.txt -Scountry:string32,state:string32,city:string32,pop:long,census:date
 java epipog -s "*" -f "pop!=150000" >stdout
 IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
-fc stdout tests\7y.cmp >tmp
+fc stdout tests\7ee.cmp >tmp
 IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
 
 echo "Test: Binary store: single key!=value short value"
@@ -758,13 +758,97 @@ del \tmp\tmp.*
 java epipog -i tests\7a.txt -Sperson:string16,start:time,count:short
 java epipog -s "*" -f "count!=6" >stdout
 IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
-fc stdout tests\7z.cmp >tmp
+fc stdout tests\7ff.cmp >tmp
 IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
 
 echo "Test: Binary store: single key!=value time value"
-java epipog -s "*" -f"start!=04:12" >stdout
+java epipog -s "*" -f"start!=04:07" >stdout
 IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
-fc stdout tests\7aa.cmp >tmp
+fc stdout tests\7gg.cmp >tmp
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
+
+echo "Test: CSV store: single key!=value, integer"
+del \tmp\tmp.*
+java epipog -i tests\7.txt -Scountry:string32,state:string32,city:string32,pop:integer,census:date -d csv
+java epipog -s "*" -f "pop!=150000" -d csv >stdout
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+fc stdout tests\7bb.cmp >tmp
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
+
+echo "Test: CSV store: single key!=value, date"
+java epipog -s "*" -f "census!=2012-01-01" -d csv >stdout
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+fc stdout tests\7cc.cmp >tmp
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
+
+echo "Test: CSV store: single key!=value, string"
+java epipog -s "*" -f "state!=Oregon" -d csv >stdout
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+fc stdout tests\7dd.cmp >tmp
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
+
+echo "Test: CSV store: single key!=value long value"
+del \tmp\tmp.*
+java epipog -i tests\7.txt -Scountry:string32,state:string32,city:string32,pop:long,census:date -d csv
+java epipog -s "*" -f "pop!=150000" -d csv >stdout
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+fc stdout tests\7ee.cmp >tmp
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
+
+echo "Test: CSV store: single key!=value short value"
+del \tmp\tmp.*
+java epipog -i tests\7a.txt -Sperson:string16,start:time,count:short -d csv
+java epipog -s "*" -f "count!=6" -d csv >stdout
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+fc stdout tests\7ff.cmp >tmp
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
+
+echo "Test: CSV store: single key!=value time value"
+java epipog -s "*" -f"start!=04:07" -d csv >stdout
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+fc stdout tests\7gg.cmp >tmp
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
+
+echo "Test: JSON store: single key!=value, integer"
+del \tmp\tmp.*
+java epipog -i tests\7.txt -Scountry:string32,state:string32,city:string32,pop:integer,census:date -d json
+java epipog -s "*" -f "pop!=150000" -d json >stdout
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+fc stdout tests\7bb.cmp >tmp
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
+
+echo "Test: JSON store: single key!=value, date"
+java epipog -s "*" -f "census!=2012-01-01" -d json >stdout
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+fc stdout tests\7cc.cmp >tmp
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
+
+echo "Test: JSON store: single key!=value, string"
+java epipog -s "*" -f "state!=Oregon" -d json >stdout
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+fc stdout tests\7dd.cmp >tmp
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
+
+echo "Test: JSON store: single key!=value long value"
+del \tmp\tmp.*
+java epipog -i tests\7.txt -Scountry:string32,state:string32,city:string32,pop:long,census:date -d json
+java epipog -s "*" -f "pop!=150000" -d json>stdout
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+fc stdout tests\7ee.cmp >tmp
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
+
+echo "Test: JSON store: single key!=value short value"
+del \tmp\tmp.*
+java epipog -i tests\7a.txt -Sperson:string16,start:time,count:short -d json
+java epipog -s "*" -f "count!=6" -d json >stdout
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+fc stdout tests\7ff.cmp >tmp
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
+
+echo "Test: JSON store: single key!=value time value"
+java epipog -s "*" -f"start!=04:07" -d json>stdout
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+fc stdout tests\7gg.cmp >tmp
 IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
 
 del tmp stdout stderr
