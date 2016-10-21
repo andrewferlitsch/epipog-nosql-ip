@@ -49,12 +49,34 @@ public abstract class DataStore {
 				}
 			}
 			
+			// Get the keys from user specified schema (if any)
+			ArrayList<Pair<String,String>> sKeys = schema.GetKeys();
+			
 			// No schema has been specified
-			if ( schema.GetKeys() == null ) {
+			if (  sKeys == null ) {
 				// Read in the schema
 				ArrayList<Pair<String,String>> keys = storage.ReadSchema();
 				if ( keys != null )
 					schema.Schema( keys );
+			}
+			// Special case for binary store
+			else if ( this.getClass().getName().equals( "BinaryStore" ) ) {
+				// Read in the schema
+				ArrayList<Pair<String,String>> keys = storage.ReadSchema();
+				
+				// Check if schemas differ
+				if ( null != keys ) {
+					
+				    if ( keys.size() != sKeys.size() )
+						throw new StorageException( "Cannot change existing schema when using Binary Store" );
+					int len = keys.size();
+					for ( int i = 0; i < len; i++ ) {
+						if ( !keys.get( i ).getKey().equals( sKeys.get( i ).getKey() ) )
+							throw new StorageException( "Cannot change existing schema when using Binary Store" );
+						if ( !keys.get( i ).getValue().equals( sKeys.get( i ).getValue() ) )
+							throw new StorageException( "Cannot change existing schema when using Binary Store" );
+					}
+				}
 			}
 		}
 	}
@@ -181,6 +203,14 @@ public abstract class DataStore {
 			storage.Write( value );
 	}
 	
+	// Write a boolean to storage
+	public void Write( boolean value )
+		throws StorageException
+	{
+		if ( null != storage )
+			storage.Write( value );
+	}
+	
 	// Read string from storage
 	public String Read( int length )
 		throws StorageException
@@ -242,6 +272,15 @@ public abstract class DataStore {
 		if ( null != storage )
 			return storage.ReadDouble();
 		return -1;
+	}
+	
+	// Read boolean from storage
+	public boolean ReadBoolean()
+		throws StorageException
+	{
+		if ( null != storage )
+			return storage.ReadBoolean();
+		return false;
 	}
 	
 	// Read a line from storage

@@ -1,6 +1,4 @@
-1. Can't dynamically set datastore type from stored schema
-
-2. Byte data type not properly handled. Perhaps it should be a char data type
+LOW 1. Can't dynamically set datastore type from stored schema
 
 4. Index does not handle collisions
 
@@ -15,3 +13,7 @@
 13. Fix -f not working on blank integer fields
 
 14. cityzip throws exception on select for json datastore
+
+15. char data type fails in binary store
+
+16. Primary Index not retained

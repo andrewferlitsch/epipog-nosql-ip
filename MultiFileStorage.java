@@ -116,6 +116,13 @@ public class MultiFileStorage extends Storage {
 		throw new UnsupportedOperationException( "MultiFileStorage.Write.double" );
 	}
 	
+	// Implementation for writing a Boolean to storage
+	public void Write( Boolean value )
+		throws UnsupportedOperationException	
+	{
+		throw new UnsupportedOperationException( "MultiFileStorage.Write.boolean" );
+	}
+	
 	// Implementation for writing a line to storage
 	public void WriteLine( String value )
 		throws UnsupportedOperationException	
@@ -177,6 +184,13 @@ public class MultiFileStorage extends Storage {
 		throws UnsupportedOperationException	
 	{
 		throw new UnsupportedOperationException( "MultiFileStorage.Read.double" );
+	}
+	
+	// Implementation for reading a boolean from storage
+	public Boolean ReadBoolean()
+		throws UnsupportedOperationException	
+	{
+		throw new UnsupportedOperationException( "MultiFileStorage.Read.boolean" );
 	}
 	
 	// Implementation for reading a line from storage

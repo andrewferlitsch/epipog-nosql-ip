@@ -61,7 +61,7 @@ public class BinaryStore extends DataStore {
 					case "string64"	: Write( (String) value, 64  ); break;
 					case "string128": Write( (String) value, 128 ); break;
 					case "short"    : Write( (Short) value ); 		break;
-					case "byte"		: Write( (Byte) value );		break;
+					case "char"		: Write( (Character) value );	break;
 					case "integer"  : Write( (Integer) value ); 	break;
 					case "long"     : Write( (Long) value ); 		break;
 					case "float"    : Write( (Float) value );		break;
@@ -163,7 +163,10 @@ public class BinaryStore extends DataStore {
 				Move( index.Pos( nth ) );
 				continue; 
 			}
-		
+			// Mismatch in data store type
+			else if ( 0x01 != dirty )
+				throw new StorageException( "Bad entry in storage or not a binary store" );
+			
 			// Read each column according to data type
 			boolean skip = false;
 			for ( Pair<String,String> key : keys ) {
@@ -174,6 +177,7 @@ public class BinaryStore extends DataStore {
 					case "string32" : value = new DataString32();  value.Set( ( ( String ) Read( 32 ) ).trim() );  break;
 					case "string64" : value = new DataString64();  value.Set( ( ( String ) Read( 64 ) ).trim() );  break;
 					case "string128": value = new DataString128(); value.Set( ( ( String ) Read( 128 ) ).trim() ); break;
+					case "char"		: value = new DataChar();	   value.Set( ( char ) ReadByte() ); break;
 					case "short"    : value = new DataShort();     value.Set( ReadShort() ); break;
 					case "integer"  : value = new DataInteger();   value.Set( ReadInt() ); break;
 					case "long"  	: value = new DataLong();      value.Set( ReadLong() ); break;

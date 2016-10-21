@@ -83,8 +83,8 @@ public abstract class SVParse extends Parse {
 					case "string128": if ( value.length() > 128 )
 										throw new StorageException( "Value too long for string128 data type: " + value );
 									  break;
-					case "byte"		: if ( value.length() > 1 )
-										throw new StorageException( "Value too long for byte data type: " + value );
+					case "char"		: if ( value.length() > 1 )
+										throw new StorageException( "Value too long for char data type: " + value );
 									  break;
 					case "short"   	: if ( value.startsWith( "0x" ) || value.startsWith( "0X") )
 										value = String.valueOf( Short.parseShort( value.substring( 2 ), 16 ) );

@@ -304,6 +304,7 @@ public class epipog {
 					case "string32"	: where.value = new DataString32(); 	where.value.Set( pair[ 1 ] ); break;
 					case "string64"	: where.value = new DataString64(); 	where.value.Set( pair[ 1 ] ); break;
 					case "string128": where.value = new DataString128(); 	where.value.Set( pair[ 1 ] ); break;
+					case "char"		: where.value = new DataChar();			where.value.Set( pair[ 1 ] ); break;
 					case "integer"	: where.value = new DataInteger(); 		where.value.Set( Integer.parseInt( pair[ 1 ] ) ); break;
 					case "short"	: where.value = new DataShort(); 		where.value.Set( Short.parseShort( pair[ 1 ] ) ); break;
 					case "long"		: where.value = new DataLong(); 		where.value.Set( Long.parseLong( pair[ 1 ] ) ); break;
@@ -343,7 +344,7 @@ public class epipog {
 				result = dataStore.Select( sKeys, whereList );
 			}
 			catch ( StorageException e ) {
-				System.err.println( "Cannot select from datastore" );
+				System.err.println( e.getMessage() );
 				System.exit( 1 );
 			}
 			catch ( IllegalArgumentException e ) {

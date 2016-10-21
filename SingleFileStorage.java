@@ -156,7 +156,7 @@ public class SingleFileStorage extends Storage {
 		}
 	}
 	
-	// Implementation for writing a short storage
+	// Implementation for writing a short to storage
 	public void Write( Short value ) 
 		throws StorageException
 	{
@@ -169,7 +169,7 @@ public class SingleFileStorage extends Storage {
 		}
 	}
 	
-	// Implementation for writing an integer storage
+	// Implementation for writing an integer to storage
 	public void Write( Integer value ) 
 		throws StorageException
 	{
@@ -182,11 +182,11 @@ public class SingleFileStorage extends Storage {
 		}
 	}
 	
-	// Implementation for writing a long integer storage
+	// Implementation for writing a long integer to storage
 	public void Write( Long value ) 
 		throws StorageException
 	{
-		try {
+		try { 
 			fd.writeLong( value );	
 		}
 		catch ( IOException e )
@@ -195,7 +195,7 @@ public class SingleFileStorage extends Storage {
 		}
 	}
 	
-	// Implementation for writing a long integer storage
+	// Implementation for writing a float to storage
 	public void Write( Float value ) 
 		throws StorageException
 	{
@@ -208,12 +208,25 @@ public class SingleFileStorage extends Storage {
 		}
 	}
 	
-	// Implementation for writing a double storage
+	// Implementation for writing a double to storage
 	public void Write( Double value ) 
 		throws StorageException
 	{
 		try {
 			fd.writeDouble( value );	
+		}
+		catch ( IOException e )
+		{
+			throw new StorageException( "Cannot write to storage file" );
+		}
+	}
+	
+	// Implementation for writing a boolean to storage
+	public void Write( Boolean value ) 
+		throws StorageException
+	{
+		try {
+			fd.writeBoolean( value );	
 		}
 		catch ( IOException e )
 		{
@@ -321,12 +334,24 @@ public class SingleFileStorage extends Storage {
 		}
 	}
 	
+	// Implementation for reading a boolean from storage
+	public Boolean ReadBoolean()
+		throws StorageException	
+	{
+		try {
+			return fd.readBoolean();
+		}
+		catch ( IOException e ) {
+			throw new StorageException( "Cannot read from storage file" );
+		}
+	}
+	
 	// Implementation for reading a line from storage
 	public String ReadLine()
 		throws StorageException	
 	{
 		try {
-			return fd.readLine();
+			return fd.readLine(); 
 		}
 		catch ( IOException e ) {
 			throw new StorageException( "Cannot read from storage file" );

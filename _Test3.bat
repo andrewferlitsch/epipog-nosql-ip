@@ -183,4 +183,49 @@ IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
 find "Salem" stdout >tmp
 if %ERRORLEVEL% NEQ 0 ( echo FAILED stdout ) else ( echo PASSED )
 
+echo "Test: mismatch CSV store with JSON store select"
+del \tmp\tmp.*
+java epipog -i tests\3.txt -F csv -Scountry:string16,state:string16,city:string16,pop:integer -d csv
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+java epipog -s "*" -d json 2>stderr
+IF %ERRORLEVEL% NEQ 1 (  echo FAILED rc ) else ( echo PASSED )
+find "Bad entry in storage or not a JSON store" stderr >stdout
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED stderr ) else ( echo PASSED )
+
+echo "Test: mismatch Binary store with JSON store select"
+del \tmp\tmp.*
+java epipog -i tests\3.txt -F csv -Scountry:string16,state:string16,city:string16,pop:integer 
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+java epipog -s "*" -d json 2>stderr
+IF %ERRORLEVEL% NEQ 1 (  echo FAILED rc ) else ( echo PASSED )
+find "Bad entry in storage or not a JSON store" stderr >stdout
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED stderr ) else ( echo PASSED )
+
+echo "Test: mismatch Binary store with CSV store select"
+del \tmp\tmp.*
+java epipog -i tests\3.txt -F csv -Scountry:string16,state:string16,city:string16,pop:integer 
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+java epipog -s "*" -d csv 2>stderr
+IF %ERRORLEVEL% NEQ 1 (  echo FAILED rc ) else ( echo PASSED )
+find "Bad entry in storage or not a SV store" stderr >stdout
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED stderr ) else ( echo PASSED )
+
+echo "Test: mismatch CSV store with Binary store select"
+del \tmp\tmp.*
+java epipog -i tests\3.txt -Scountry:string16,state:string16,city:string16,pop:integer -d csv
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+java epipog -s "*" 2>stderr
+IF %ERRORLEVEL% NEQ 1 (  echo FAILED rc ) else ( echo PASSED )
+find "Bad entry in storage or not a binary store" stderr >stdout
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED stderr ) else ( echo PASSED )
+
+echo "Test: mismatch JSON store with Binary store select"
+del \tmp\tmp.*
+java epipog -i tests\3.txt -Scountry:string16,state:string16,city:string16,pop:integer -d json
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+java epipog -s "*" 2>stderr
+IF %ERRORLEVEL% NEQ 1 (  echo FAILED rc ) else ( echo PASSED )
+find "Bad entry in storage or not a binary store" stderr >stdout
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED stderr ) else ( echo PASSED )
+
 del tmp stdout stderr

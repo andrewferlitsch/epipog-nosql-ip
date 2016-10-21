@@ -135,6 +135,10 @@ public class JSONStore extends DataStore {
 			ArrayList<String> vl = SVParse.Split( line, ',' );
 			String[] values = vl.toArray( new String[ vl.size() ] );
 			
+			// Sanity Check on Store
+			if ( '{' != values[ 0 ].charAt( 0 ) )
+				throw new StorageException( "Bad entry in storage or not a JSON store" );
+			
 			nth++; // increment the next sequential position of a record (row/document)
 			boolean skip = false;
 			for ( int j = 0; j < values.length; j++ ) {
@@ -173,7 +177,7 @@ public class JSONStore extends DataStore {
 									case "string32" : row[ i ] = new DataString32();	row[ i ].Set( values[ j ] ); break;
 									case "string64" : row[ i ] = new DataString64();	row[ i ].Set( values[ j ] ); break;
 									case "string128": row[ i ] = new DataString128();	row[ i ].Set( values[ j ] ); break;
-									case "byte"		: row[ i ] = new DataByte();		row[ i ].Set( Byte.parseByte( values[ j ] ) ); break;
+									case "char"		: row[ i ] = new DataChar();		row[ i ].Set( values[ j ].charAt( 0 ) ); break;
 									case "short"	: row[ i ] = new DataShort();   	row[ i ].Set( Short.parseShort( values[ j ] ) ); break;
 									case "integer"	: row[ i ] = new DataInteger(); 	row[ i ].Set( Integer.parseInt( values[ j ] ) ); break;
 									case "long"		: row[ i ] = new DataLong();		row[ i ].Set( Long.parseLong( values[ j ] ) ); break;

@@ -61,6 +61,9 @@ public abstract class Storage {
 	// Method to write a double to the storage
 	public abstract void Write( Double value ) throws StorageException;
 	
+	// Method to write a boolean to the storage
+	public abstract void Write( Boolean value ) throws StorageException;
+	
 	// Method to write a line to storage
 	public abstract void WriteLine( String value ) throws StorageException;
 	
@@ -84,6 +87,9 @@ public abstract class Storage {
 	
 	// Method to Read a double from storage
 	public abstract double ReadDouble() throws StorageException;
+	
+	// Method to Read a boolean from storage
+	public abstract Boolean ReadBoolean() throws StorageException;
 	
 	// Method to Read a line from storage
 	public abstract String ReadLine() throws StorageException;

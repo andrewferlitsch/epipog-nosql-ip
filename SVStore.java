@@ -128,7 +128,12 @@ public class SVStore extends DataStore {
 			row = new Data[ colOrder.length ];
 			String first = null;	// first column in record
 			int ncol = 0;			// current column position
-
+			
+			// Looks like a binary store
+			if ( line.length() > 0 && 
+			     line.charAt( 0 ) == 0x00 || line.charAt( 0 ) == 0x01 ) 
+				throw new StorageException( "Bad entry in storage or not a SV store" );
+			
 			// Split the line into columns
 			nth++; // increment the next sequential position of a record (row/document)
 			boolean skip = false;
@@ -151,7 +156,7 @@ public class SVStore extends DataStore {
 									case "string32" : row[ i ] = new DataString32();	row[ i ].Set( value ); break;
 									case "string64" : row[ i ] = new DataString64();	row[ i ].Set( value ); break;
 									case "string128": row[ i ] = new DataString128();	row[ i ].Set( value ); break;
-									case "byte"		: row[ i ] = new DataByte();   		row[ i ].Set( Byte.parseByte( value ) ); break;
+									case "char"		: row[ i ] = new DataChar();		row[ i ].Set( value.charAt( 0 ) ); break;
 									case "short"	: row[ i ] = new DataShort();   	row[ i ].Set( Short.parseShort( value ) ); break;
 									case "integer"	: row[ i ] = new DataInteger(); 	row[ i ].Set( Integer.parseInt( value ) ); break;
 									case "long"		: row[ i ] = new DataLong();		row[ i ].Set( Long.parseLong( value ) ); break;

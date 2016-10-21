@@ -235,4 +235,25 @@ java epipog -s country -d json >stdout
 find "United States, The" stdout >tmp
 if %ERRORLEVEL% NEQ 0 ( echo FAILED stdout ) else ( echo PASSED )
 
+echo "Test: Cannot update schema on binary store, extra field"
+del \tmp\tmp.*
+java epipog -i tests\2u.txt -Sfield1:integer,field2:integer
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+java epipog -i tests\2v.txt -Sfield1:integer,field2:integer,field3:integer 2>stderr
+IF %ERRORLEVEL% NEQ 1 (  echo FAILED rc ) else ( echo PASSED )
+find "Cannot change existing schema when using Binary Store" stderr >stdout
+if %ERRORLEVEL% NEQ 0 ( echo FAILED stderr ) else ( echo PASSED )
+
+echo "Test: Cannot update schema on binary store, differ field names"
+java epipog -i tests\2u.txt -Sfield1:integer,field3:integer 2>stderr
+IF %ERRORLEVEL% NEQ 1 (  echo FAILED rc ) else ( echo PASSED )
+find "Cannot change existing schema when using Binary Store" stderr >stdout
+if %ERRORLEVEL% NEQ 0 ( echo FAILED stderr ) else ( echo PASSED )
+
+echo "Test: Cannot update schema on binary store, differ field type"
+java epipog -i tests\2u.txt -Sfield1:integer,field2:short 2>stderr
+IF %ERRORLEVEL% NEQ 1 (  echo FAILED rc ) else ( echo PASSED )
+find "Cannot change existing schema when using Binary Store" stderr >stdout
+if %ERRORLEVEL% NEQ 0 ( echo FAILED stderr ) else ( echo PASSED )
+
 del stdout stderr data
