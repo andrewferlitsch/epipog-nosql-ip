@@ -28,8 +28,8 @@ public class DataLong extends Data {
 	
 	// Implementation for equal operator for data type
 	public boolean EQ( Object v ) {
-		Long v1 = ( Long ) value;
-		Long v2 = ( ( DataLong ) v ).Get();
+		long v1 = ( Long ) value;
+		long v2 = ( ( DataLong ) v ).Get();
 		return ( v1 == v2 );
 	}
 	

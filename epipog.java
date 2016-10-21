@@ -285,6 +285,11 @@ public class epipog {
 					System.err.println( usage );
 					System.exit( 1 );
 				}
+				catch ( NumberFormatException e ) {
+					System.err.println( "Invalid argument for find clause (-f): " + pair[ 1 ] );
+					System.err.println( usage );
+					System.exit( 1 );
+				}
 			}
 		}
 		

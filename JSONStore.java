@@ -133,7 +133,8 @@ public class JSONStore extends DataStore {
 			// Split the line into columns
 			ArrayList<String> vl = SVParse.Split( line, ',' );
 			String[] values = vl.toArray( new String[ vl.size() ] );
-			
+
+			boolean skip = false;
 			for ( int j = 0; j < values.length; j++ ) {
 				// Check if entry has been marked as dirty ({"#)
 				if ( null == first ) {
@@ -147,6 +148,7 @@ public class JSONStore extends DataStore {
 				}
 				
 				// add to row result in correct order if part of result
+				
 				if ( false == first.startsWith( "{#" ) ) {
 					// split entry into id and value
 					String[] pair = values[ j ].split( ":" );
@@ -184,6 +186,26 @@ public class JSONStore extends DataStore {
 							catch ( ParseException e ) {
 								throw new StorageException( e.getMessage() );
 							}
+							
+							// Check where 
+							if ( null != where ) {
+								// TODO: only supports single where (equal only)
+								switch ( where.op ) {
+								case EQ: 
+									// matched key
+									if ( keys.get( ncol ).getKey().equals( where.key ) ) {
+										// value not matched
+										if ( !row[ i ].EQ( where.value ) ) {
+											 skip = true;
+											 break;
+										}
+									}
+
+									break;
+								}
+				
+								// TODO: should jump to next row on skip (unmatched where), but needs an index always
+							}
 							break;
 						}
 					}
@@ -192,8 +214,13 @@ public class JSONStore extends DataStore {
 				ncol++;	// increment the column position
 			}
 			
+			// did not match where clause
+			if ( true == skip ) {
+				continue;
+			}
+			
 			// entry is marked as dirty
-			if ( first.startsWith( "{\"#" ) )
+			if ( first.startsWith( "{#" ) )
 				continue;
 		
 			// Add the row to the result

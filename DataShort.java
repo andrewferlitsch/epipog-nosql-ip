@@ -29,8 +29,8 @@ public class DataShort extends Data {
 	
 	// Implementation for equal operator for data type
 	public boolean EQ( Object v ) {
-		Short v1 = ( Short ) value;
-		Short v2 = ( ( DataShort ) v ).Get();
+		short v1 = ( Short ) value;
+		short v2 = ( ( DataShort ) v ).Get();
 		return  v1 == v2;
 	}
 	

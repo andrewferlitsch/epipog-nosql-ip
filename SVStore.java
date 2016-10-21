@@ -131,6 +131,7 @@ public class SVStore extends DataStore {
 
 			// Split the line into columns
 			nth++; // increment the next sequential position of a record (row/document)
+			boolean skip = false;
 			ArrayList<String> values = SVParse.Split( line, separator );
 			for ( String value : values  ) {
 				// Check if entry has been marked as dirty (###)
@@ -165,6 +166,25 @@ public class SVStore extends DataStore {
 							catch ( ParseException e ) {
 								throw new StorageException( e.getMessage() );
 							}
+							
+							// Check where 
+							if ( null != where ) {
+								// TODO: only supports single where (equal only)
+								switch ( where.op ) {
+								case EQ: 
+									// matched key
+									if ( keys.get( ncol ).getKey().equals( where.key ) ) {
+										// value not matched
+										if ( !row[ i ].EQ( where.value ) ) {
+											 skip = true;
+											 break;
+										}
+									}
+									break;
+								}
+								
+								// TODO: should jump to next row on skip (unmatched where), but needs an index always
+							}
 							break;
 						}
 					}
@@ -178,6 +198,11 @@ public class SVStore extends DataStore {
 				}
 				
 				ncol++;	// increment the column position
+			}
+			
+			// did not match where clause
+			if ( true == skip ) {
+				continue;
 			}
 			
 			// entry is marked as dirty
