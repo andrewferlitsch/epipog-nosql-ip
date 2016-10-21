@@ -22,9 +22,14 @@ public abstract class DataString extends Data {
 		return ( String ) value;
 	}
 	
-	// Implementation for less than operator for String
+	// Implementation for equal operator for String
 	public boolean EQ( Object v ) {
 		return ( ( ( String ) value ).compareTo( ( ( DataString ) v ).Get() ) ) == 0 ? true : false;
+	}
+	
+	// Implementation for not equal operator for String
+	public boolean NE( Object v ) {
+		return ( ( ( String ) value ).compareTo( ( ( DataString ) v ).Get() ) ) != 0 ? true : false;
 	}
 	
 	// Implementation for less than operator for String

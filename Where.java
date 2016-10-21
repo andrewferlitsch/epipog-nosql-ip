@@ -7,6 +7,7 @@ public class Where {
 	
 	public enum WhereOp {
 		EQ,
+		NE,
 		LT,
 		GT,
 		LE,

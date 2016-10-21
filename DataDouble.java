@@ -31,6 +31,11 @@ public class DataDouble extends Data {
 		return ( Double ) value == ( ( DataDouble ) v ).Get();
 	}
 	
+	// Implementation for not equal operator for data type
+	public boolean NE( Object v ) {
+		return ( Double ) value != ( ( DataDouble ) v ).Get();
+	}
+	
 	// Implementation for less than operator for data type
 	public boolean LT( Object v ) {
 		return ( Double ) value < ( ( DataDouble ) v ).Get();

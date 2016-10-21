@@ -38,6 +38,13 @@ public class DataDate extends Data {
 		return v1 == v2;
 	}
 	
+	// Implementation for not equal operator for data type
+	public boolean NE( Object v ) {
+		long v1 = ( Long ) value;
+		long v2 = ( ( DataDate ) v ).Get();
+		return v1 != v2;
+	}
+	
 	// Implementation for less than operator for data type
 	public boolean LT( Object v ) {
 		return ( Long ) value < ( ( DataDate ) v ).Get();

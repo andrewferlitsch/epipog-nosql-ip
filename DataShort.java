@@ -34,6 +34,13 @@ public class DataShort extends Data {
 		return  v1 == v2;
 	}
 	
+	// Implementation for not equal operator for data type
+	public boolean NE( Object v ) {
+		short v1 = ( Short ) value;
+		short v2 = ( ( DataShort ) v ).Get();
+		return  v1 != v2;
+	}
+	
 	// Implementation for less than operator for data type
 	public boolean LT( Object v ) {
 		return ( Short ) value < ( ( DataShort ) v ).Get();

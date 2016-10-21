@@ -31,6 +31,11 @@ public class DataFloat extends Data {
 		return ( Float ) value == ( ( DataFloat ) v ).Get();
 	}
 	
+	// Implementation for not equal operator for data type
+	public boolean NE( Object v ) {
+		return ( Float ) value != ( ( DataFloat ) v ).Get();
+	}
+	
 	// Implementation for less than operator for data type
 	public boolean LT( Object v ) {
 		return ( Float ) value < ( ( DataFloat ) v ).Get();

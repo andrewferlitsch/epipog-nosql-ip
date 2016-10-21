@@ -84,7 +84,7 @@ public class BinaryStore extends DataStore {
 	}
 	
 	// Implementation of Select() method
-	public ArrayList<Data[]> Select( String[] cols, Where where ) 
+	public ArrayList<Data[]> Select( String[] cols, ArrayList<Where> whereList ) 
 		throws IllegalArgumentException, StorageException
 	{
 		int    colOrder[];
@@ -184,43 +184,55 @@ public class BinaryStore extends DataStore {
 				}
 
 				// Check where 
-				if ( null != where ) {
-					// TODO: only supports single where (equal only)
-					
-					// matched key
-					if ( key.getKey().equals( where.key ) ) {
-						switch ( where.op ) {
-						case EQ: 
-							if ( !value.EQ( where.value ) ) {
-								skip = true; // value not matched
+				if ( null != whereList ) {
+
+					// Check each where condition (AND)
+					for ( Where where : whereList ) {
+						// matched key
+						if ( key.getKey().equals( where.key ) ) {
+							switch ( where.op ) {
+							case EQ: 
+								if ( !value.EQ( where.value ) ) {
+									skip = true; // value not matched
+									break;
+								}
+								break;
+							case NE: 
+								if ( !value.NE( where.value ) ) {
+									skip = true; // value not matched
+									break;
+								}
+								break;
+							case LT: 
+								if ( !value.LT( where.value ) ) {
+									skip = true; // value not matched
+									break;
+								}
+								break;
+							case GT: 
+								if ( !value.GT( where.value ) ) {
+									skip = true; // value not matched
+									break;
+								}
+								break;
+							case LE: 
+								if ( !value.LE( where.value ) ) {
+									skip = true; // value not matched
+									break;
+								}
+								break;
+							case GE: 
+								if ( !value.GE( where.value ) ) {
+									skip = true; // value not matched
+									break;
+								}
 								break;
 							}
-							break;
-						case LT: 
-							if ( !value.LT( where.value ) ) {
-								skip = true; // value not matched
-								break;
-							}
-							break;
-						case GT: 
-							if ( !value.GT( where.value ) ) {
-								skip = true; // value not matched
-								break;
-							}
-							break;
-						case LE: 
-							if ( !value.LE( where.value ) ) {
-								skip = true; // value not matched
-								break;
-							}
-							break;
-						case GE: 
-							if ( !value.GE( where.value ) ) {
-								skip = true; // value not matched
-								break;
-							}
-							break;
 						}
+						
+						// none match already found
+						if ( true == skip )
+							break;
 					}
 					// TODO: should jump to next row on skip (unmatched where), but needs an index always
 				}

@@ -142,7 +142,12 @@ public class Schema {
 	}
 	
 	// Get data type of a string
-	public String GetType( String col ) {
+	public String GetType( String col ) 
+		throws IllegalArgumentException
+	{
+		if ( null == keys )
+			throw new IllegalArgumentException( "No Schema" );
+			
 		for ( Pair<String,String> key : keys ) {
 			// Look for key in the schema (keys)
 			if ( key.getKey().equals( col ) )  {

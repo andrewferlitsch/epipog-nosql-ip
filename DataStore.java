@@ -365,7 +365,7 @@ public abstract class DataStore {
 	// Method for selecting rows from datastore
 	//	keys: keys to selecting
 	//	where: where clause for matching records
-	public abstract ArrayList<Data[]> Select( String[] keys, Where where ) throws IllegalArgumentException, StorageException;		
+	public abstract ArrayList<Data[]> Select( String[] keys, ArrayList<Where> where ) throws IllegalArgumentException, StorageException;		
 
 	
 	// Method for vacuuming a collection

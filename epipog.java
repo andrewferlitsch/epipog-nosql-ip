@@ -241,6 +241,7 @@ public class epipog {
 		
 		// filter (where)
 		Where where = null;
+		ArrayList<Where> whereList = new ArrayList<Where>();
 		if ( null != fOption ) {
 			String[] filters = fOption.split( "," );
 			
@@ -248,10 +249,19 @@ public class epipog {
 			for ( String filter : filters ) {
 				where = new Where();	// allocate a filter object
 				
-				String[] pair = filter.split( "=" );
-				if ( filter.contains( "=" ) ) {
-					pair = filter.split( "=" );
-					where.op = Where.WhereOp.EQ; 
+				// Parse the where operatorS
+				String[] pair = null;
+				if ( filter.contains( "<=" ) ) {
+					pair = filter.split( "<=" );
+					where.op = Where.WhereOp.LE; 
+				}
+				else if ( filter.contains( ">=" ) ) {
+					pair = filter.split( "<" );
+					where.op = Where.WhereOp.GE; 
+				}
+				else if ( filter.contains( "!=" ) ) {
+					pair = filter.split( "!=" );
+					where.op = Where.WhereOp.NE; 
 				}
 				else if ( filter.contains( "<" ) ) {
 					pair = filter.split( "<" );
@@ -261,28 +271,31 @@ public class epipog {
 					pair = filter.split( ">" );
 					where.op = Where.WhereOp.GT; 
 				}
-				else if ( filter.contains( "<=" ) ) {
-					pair = filter.split( "<=" );
-					where.op = Where.WhereOp.LE; 
+				else if ( filter.contains( "=" ) ) {
+					pair = filter.split( "=" );
+					where.op = Where.WhereOp.EQ; 
 				}
-				else if ( filter.contains( ">=" ) ) {
-					pair = filter.split( "<" );
-					where.op = Where.WhereOp.GE; 
-				}
-				if ( pair.length != 2 ) {
+				if ( null == pair || pair.length != 2 ) {
 					System.err.println( "Malformed argument for filter (-f): " + filter );
 					System.err.println( usage );
 					System.exit( 1 );
 				}
-				
-				String type = dataStore.GetType( pair[ 0 ] );
+			
+				String type = null;
+				try {
+					type = dataStore.GetType( pair[ 0 ] );
+				}
+				catch ( IllegalArgumentException e ) {
+					System.err.println( e.getMessage() );
+					System.err.println( usage );
+					System.exit( 1 );
+				}
 				if ( null == type ) {
 					System.err.println( "Key not found: " + pair[ 0 ] );
 					System.err.println( usage );
 					System.exit( 1 );
 				}
 				
-				// TODO: only doing one where
 				where.key = pair[ 0 ]; 
 				
 				try {
@@ -301,6 +314,8 @@ public class epipog {
 					case "time"		: where.value = new DataTime(); 		format = new SimpleDateFormat("HH:ss");
 																			where.value.Set( format.parse( pair[ 1 ] ).getTime() ); break;
 					}
+					
+					whereList.add( where );
 				}
 				catch ( ParseException e ) {
 					System.err.println( "Invalid argument for find clause (-f): " + pair[ 1 ] );
@@ -325,7 +340,7 @@ public class epipog {
 				sKeys[ j ] = sKeys[ j ].toLowerCase();
 			
 			try {
-				result = dataStore.Select( sKeys, where );
+				result = dataStore.Select( sKeys, whereList );
 			}
 			catch ( StorageException e ) {
 				System.err.println( "Cannot select from datastore" );
@@ -354,7 +369,6 @@ public class epipog {
 								break;
 				}
 				
-				 
 				try
 				{
 					String[] orderby = oOption.split( "," );

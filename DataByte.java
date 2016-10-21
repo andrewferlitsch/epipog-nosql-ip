@@ -32,6 +32,11 @@ public class DataByte extends Data {
 		return ( Byte ) value == ( ( DataByte ) v ).Get();
 	}
 	
+	// Implementation for not equal operator for data type
+	public boolean NE( Object v ) {
+		return ( Byte ) value != ( ( DataByte ) v ).Get();
+	}
+	
 	// Implementation for less than operator for data type
 	public boolean LT( Object v ) {
 		return ( Byte ) value < ( ( DataByte ) v ).Get();

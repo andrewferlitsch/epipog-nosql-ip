@@ -25,6 +25,9 @@ public abstract class Data {
 	// Method for equal operator for data type
 	public abstract boolean EQ( Object v );
 	
+	// Method for not equal operator for data type
+	public abstract boolean NE( Object v );
+	
 	// Method for less than operator for data type
 	public abstract boolean LT( Object v );
 	

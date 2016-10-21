@@ -340,4 +340,11 @@ IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
 fc stdout tests\7l.cmp >tmp
 IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
 
+echo "Test: singe key/value where, no schema"
+del \tmp\tmp.*
+java epipog -s "*" -f "start<11:18" -d json 2>stderr
+IF %ERRORLEVEL% NEQ 1 (  echo FAILED rc ) else ( echo PASSED )
+find "No Schema" stderr >stdout
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED stderr ) else ( echo PASSED )
+
 del tmp stdout stderr
