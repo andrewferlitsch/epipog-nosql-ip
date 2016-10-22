@@ -231,4 +231,15 @@ if %ERRORLEVEL% NEQ 1 ( echo FAILED stdout ) else ( echo PASSED  )
 find "Canada,Alberta,Banff" stdout >tmp
 if %ERRORLEVEL% NEQ 1 ( echo FAILED stdout ) else ( echo PASSED  )
 
+echo "Test: Linked Index, retain primary keys in schema"
+del \tmp\tmp.* 
+java epipog -i tests\5.txt -Scountry:string32,state:string32,city:string32 -Pcountry
+if %ERRORLEVEL% NEQ 0 ( echo FAILED rc ) else ( echo PASSED  )
+java epipog -i tests\5.txt
+if %ERRORLEVEL% NEQ 0 ( echo FAILED rc ) else ( echo PASSED  )
+java epipog -s "*" >stdout
+if %ERRORLEVEL% NEQ 0 ( echo FAILED rc ) else ( echo PASSED  )
+fc stdout tests\5.cmp >tmp
+if %ERRORLEVEL% NEQ 0 ( echo FAILED stdout ) else ( echo PASSED  )
+
 del tmp stdout stderr

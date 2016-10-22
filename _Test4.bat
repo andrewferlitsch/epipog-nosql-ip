@@ -177,8 +177,29 @@ IF %ERRORLEVEL% NEQ 1 (  echo FAILED rc ) else ( echo PASSED )
 find "Value too long for string128 data type: " stderr >stdout
 if %ERRORLEVEL% NEQ 0 ( echo FAILED stderr ) else ( echo PASSED )
 
-echo "Test: CSV, incorrect data type for byte"
+echo "Test: CSV, incorrect data type for char"
 del \tmp\tmp.*
-java epipog -i tests\4j.txt -Sname:string16,status:byte -F csv 2>stderr
+java epipog -i tests\4j.txt -Sname:string16,status:char -F csv 2>stderr
+IF %ERRORLEVEL% NEQ 1 (  echo FAILED rc ) else ( echo PASSED )
+find "Value too long for char data type: " stderr >stdout
+if %ERRORLEVEL% NEQ 0 ( echo FAILED stderr ) else ( echo PASSED )
+
+echo "Test: CSV, char data type"
+del \tmp\tmp.*
+java epipog -i tests\4k.txt -Sfield1:char,field2:integer -F csv -d csv
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+java epipog -s "*" -d csv >stdout
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+find "c,12" stdout >stderr
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED stdout ) else ( echo PASSED )
+
+echo "Test: JSON, char data type"
+del \tmp\tmp.*
+java epipog -i tests\4k.txt -Sfield1:char,field2:integer -F csv -d json
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+java epipog -s "*" -d json >stdout
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+find "c,12" stdout >stderr
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED stdout ) else ( echo PASSED )
 
 del tmp stdout stderr

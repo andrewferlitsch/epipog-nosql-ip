@@ -5,8 +5,8 @@ import java.util.*;
 //
 public class LinkedIndex extends Index {
 	// constructor
-	public LinkedIndex( String collectionName ) {
-		super( collectionName );
+	public LinkedIndex( String collectionName, String[] keys ) {
+		super( collectionName, keys );
 	}
 	
 	// in-memory storage

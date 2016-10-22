@@ -12,9 +12,9 @@ public abstract class DataStore {
 	private   Storage  storage = null;			// data storage
 	
 	// Constructor
-	public DataStore( String _collectionName )
+	public DataStore( String collectionName )
 	{
-		collectionName = _collectionName;	
+		this.collectionName = collectionName;	
 		
 		// Construct the schema object
 		schema = new Schema( collectionName );
@@ -42,13 +42,15 @@ public abstract class DataStore {
 			storage.Open();
 		
 			// read in the index
-			ArrayList<long[]> entries = storage.ReadIndex();
+			ArrayList<long[]> entries = storage.ReadIndex( index );
 			if ( entries != null ) {
 				for ( long[] entry : entries ) {
 					index.Add( entry[ 0 ], entry[ 1 ] );
 				}
+				
+				primary = index.Keys();	// update the primary key list
 			}
-			
+
 			// Get the keys from user specified schema (if any)
 			ArrayList<Pair<String,String>> sKeys = schema.GetKeys();
 			
@@ -294,16 +296,21 @@ public abstract class DataStore {
 	
 		
 	// Method for dynamically specifying the primary keys
-	public void Primary( String[] _primary ) 
+	public void Primary( String[] primary ) 
 		throws IllegalArgumentException
 	{
-		schema.checkKeyArgs( _primary );
+		schema.checkKeyArgs( primary );
 		
-		primary  = _primary;
+		this.primary  = primary;
 		
 		// No primary key
 		if ( null == primary )
 			return;
+	}
+	
+	// Accessor for primary keys
+	public String[] Primary() {
+		return primary;
 	}
 	
 	// Set the dynamic schema definition
@@ -343,9 +350,9 @@ public abstract class DataStore {
 		throws StorageException
 	{
 		switch ( type.toLowerCase() ) {
-			case "linked": index = new LinkedIndex( collectionName );
+			case "linked": index = new LinkedIndex( collectionName, primary );
 						   break;
-			case "binary": index = new BinaryTreeIndex( collectionName );
+			case "binary": index = new BinaryTreeIndex( collectionName, primary );
 						   break;
 			default		 : throw new StorageException( "Invalid argument for index type (-I): " + type );
 		}

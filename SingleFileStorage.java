@@ -376,9 +376,35 @@ public class SingleFileStorage extends Storage {
 			throw new StorageException( "Index File not Found: " + idx );
 		}
 		
-		// TODO: structure of index is hardcoded. 
-		// Should be abstracted
+		// Get the primary key(s)
+		String[] primary = index.Keys();
+		try
+		{
+			// No primary keys
+			if ( null == primary )
+				ix.writeShort( 0 );	
+			else
+			{
+				// Calculate the length of the primary key string
+				int len = 0;
+				for ( String key : primary )
+					len += key.length() + 1;
+				// File starts with length of primary key string
+				ix.writeShort( len );
+				
+				// Write the primary key list to the index
+				for ( String key : primary ) {
+					byte[] bytes = ( key + "," ).getBytes();
+					ix.write( bytes, 0, bytes.length );	
+				}
+			}
+		}
+		catch ( IOException e )
+		{
+			throw new StorageException( "Cannot write to index file" );
+		}
 		
+		// Write out the index
 		ArrayList<long[]> entries = (ArrayList<long[]>)index.Index();
 		for ( long[] entry : entries ) {
 			try
@@ -387,7 +413,7 @@ public class SingleFileStorage extends Storage {
 				ix.writeLong( entry[ 1 ] );
 			}
 			catch ( IOException e ) {
-				throw new StorageException( "Cannot write to storage file" );
+				throw new StorageException( "Cannot write to index file" );
 			}
 		}
 		
@@ -402,7 +428,7 @@ public class SingleFileStorage extends Storage {
 	}
 	
 	// Implementation for reading in index from storage
-	public ArrayList<long[]> ReadIndex()
+	public ArrayList<long[]> ReadIndex( Index index )
 		throws StorageException
 	{
 		String idx = storageRoot + collection + ".idx";
@@ -429,7 +455,34 @@ public class SingleFileStorage extends Storage {
 		catch ( IOException e ) {
 			throw new StorageException( "Cannot read from index file" );
 		}
+		
+		// Integrity check
+		if ( filesize < 2 ) {
+			throw new StorageException( "Index file too small" );
+		}
+		
+		filesize -= 2;	// subtract from size the length of primary key(s) field
+		try
+		{
+			// Read in the primary key(s)
+			int len = ix.readShort();
 
+			if ( filesize < len )
+				throw new StorageException( "Index file too small" );
+			if ( len > 0 ) {
+				byte[] bytes = new byte[ len ];
+				ix.read( bytes );
+				String sKeys  = new String( bytes, "UTF-8" );
+				filesize -= len;	// subtract from size the length of the primary keys
+				
+				// Load the keys
+				index.Keys( sKeys.substring( 0, sKeys.length() - 1 ).split( "," ) );
+			}
+		}
+		catch ( IOException e ) {
+			throw new StorageException( "Cannot read from index file" );
+		}
+		
 		ArrayList<long[]> entries = new ArrayList<long[]>();
 		
 		// read 16 bytes at a time

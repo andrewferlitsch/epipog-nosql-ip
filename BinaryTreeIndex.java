@@ -5,8 +5,8 @@ import java.util.ArrayList;
 //
 public class BinaryTreeIndex extends Index {
 	// constructor
-	public BinaryTreeIndex( String collectionName ) {
-		super( collectionName );
+	public BinaryTreeIndex( String collectionName, String[] keys ) {
+		super( collectionName, keys );
 	}
 	
 	// Method for adding a hashed entry to the index

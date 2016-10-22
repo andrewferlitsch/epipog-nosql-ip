@@ -5,9 +5,17 @@ import java.util.ArrayList;
 public abstract class Index {
 	
 	// constructor
-	public Index( String collectionName ) {
-		
+	public Index( String collectionName, String[] keys ) {
+		this.collectionName = collectionName;
+		this.keys           = keys;
 	}
+	
+	private String    collectionName;	// collection name
+	private String[]  keys;				// keys being indexed
+	
+	// Get/Set Accessors for keys
+	public  String[] Keys() { return keys; }
+	public  void Keys( String[] keys ) { this.keys = keys; }
 	
 	// Method for adding a hashed entry to the index
 	// Return:

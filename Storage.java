@@ -9,11 +9,11 @@ public abstract class Storage {
 	
 	protected String collection = null;	// name of the collection (file) in storage
 	
-	public Storage( String _collection ) throws IllegalArgumentException
+	public Storage( String collection ) throws IllegalArgumentException
 	{
-		if ( null == _collection )
+		if ( null == collection )
 			throw new IllegalArgumentException( "collection is null" );
-		collection = _collection;
+		this.collection = collection;
 	}
 	
 	// Method for opening (connecting) to storage
@@ -98,7 +98,7 @@ public abstract class Storage {
 	public abstract void Write( Index index ) throws StorageException;
 	
 	// Method to Read in index from storage
-	public abstract ArrayList<long[]> ReadIndex() throws StorageException;
+	public abstract ArrayList<long[]> ReadIndex( Index index ) throws StorageException;
 	
 	// Method to Write out schema to storage
 	public abstract void Write( Schema schema ) throws StorageException;
