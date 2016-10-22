@@ -14,6 +14,4 @@ LOW 1. Can't dynamically set datastore type from stored schema
 
 14. cityzip throws exception on select for json datastore
 
-15. char data type fails in binary store
-
 17.

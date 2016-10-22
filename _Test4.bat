@@ -202,4 +202,13 @@ IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
 find "c,12" stdout >stderr
 IF %ERRORLEVEL% NEQ 0 (  echo FAILED stdout ) else ( echo PASSED )
 
+echo "Test: binary, char data type"
+del \tmp\tmp.*
+java epipog -i tests\4k.txt -Sfield1:char,field2:integer -F csv 
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+java epipog -s "*" >stdout
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+find "c,12" stdout >stderr
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED stdout ) else ( echo PASSED )
+
 del tmp stdout stderr
