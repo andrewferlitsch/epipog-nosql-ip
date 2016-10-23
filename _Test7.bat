@@ -851,4 +851,14 @@ IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
 fc stdout tests\7gg.cmp >tmp
 IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
 
+echo "Test: CSV, blank integer field"
+del \tmp\tmp.*
+java epipog -i tests\7b.txt -Scountry:string16,pop:integer -d csv
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+java epipog -i tests\7c.txt -Scountry:string16,pop:integer,year:short -d csv
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+java epipog -s "*" -f "year=2014" >stdout
+fc stdout tests\7hh.cmp >tmp
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
+
 del tmp stdout stderr

@@ -137,6 +137,7 @@ public class SVStore extends DataStore {
 			// Split the line into columns
 			nth++; // increment the next sequential position of a record (row/document)
 			boolean skip = false;
+			int nWhereChecked = 0; // number of where clauses checked
 			ArrayList<String> values = SVParse.Split( line, separator );
 			for ( String value : values  ) {
 				// Check if entry has been marked as dirty (###)
@@ -145,6 +146,7 @@ public class SVStore extends DataStore {
 
 				// add to row result in correct order if part of result
 				if ( false == first.startsWith( "###" ) ) {
+					
 					for ( int i = 0; i < colOrder.length; i++ ) {
 						if ( colOrder[ i ] == ncol ) {	
 							try
@@ -179,6 +181,8 @@ public class SVStore extends DataStore {
 								for ( Where where : whereList ) {
 									// matched key
 									if ( keys.get( ncol ).getKey().equals( where.key ) ) {
+										nWhereChecked++;	// keep count of number of where clauses checked
+										
 										switch ( where.op ) {
 										case EQ: 
 											if ( !row[ i ].EQ( where.value ) ) {
@@ -239,7 +243,11 @@ public class SVStore extends DataStore {
 				}
 				
 				ncol++;	// increment the column position
-			}
+			}					
+					
+			// not all where clauses where checked (e.g., blank field)
+			if ( null != whereList && nWhereChecked < whereList.size() )
+				continue;
 			
 			// did not match where clause
 			if ( true == skip ) {

@@ -1,10 +1,10 @@
 
 // Class for Where Clause
 public class Where {
-	String  key;
-	Data   value;	
-	WhereOp op;
-	
+	String  key;				// key to check
+	Data    value;				// value to compare to
+	WhereOp op;					// comparison operation
+
 	public enum WhereOp {
 		EQ,
 		NE,
