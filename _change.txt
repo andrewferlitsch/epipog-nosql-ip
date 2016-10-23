@@ -10,6 +10,4 @@ LOW 1. Can't dynamically set datastore type from stored schema
 
 10.	Add config file for default settings
 
-13. Fix -f not working on blank integer fields
-
 17.

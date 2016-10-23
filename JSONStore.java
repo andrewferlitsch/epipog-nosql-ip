@@ -141,6 +141,7 @@ public class JSONStore extends DataStore {
 			
 			nth++; // increment the next sequential position of a record (row/document)
 			boolean skip = false;
+			int nWhereChecked = 0; // number of where clauses checked
 			for ( int j = 0; j < values.length; j++ ) {
 				// Check if entry has been marked as dirty ({"#)
 				if ( null == first ) {
@@ -200,6 +201,8 @@ public class JSONStore extends DataStore {
 								for ( Where where : whereList ) {
 									// matched key
 									if ( keys.get( ncol ).getKey().equals( where.key ) ) {
+										nWhereChecked++;	// keep count of number of where clauses checked
+										
 										switch ( where.op ) {
 										case EQ: 
 											if ( !row[ i ].EQ( where.value ) ) {
@@ -260,7 +263,11 @@ public class JSONStore extends DataStore {
 				}
 
 				ncol++;	// increment the column position
-			}
+			}					
+					
+			// not all where clauses where checked (e.g., blank field)
+			if ( null != whereList && nWhereChecked < whereList.size() )
+				continue;
 			
 			// did not match where clause
 			if ( true == skip ) {

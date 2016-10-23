@@ -857,7 +857,17 @@ java epipog -i tests\7b.txt -Scountry:string16,pop:integer -d csv
 IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
 java epipog -i tests\7c.txt -Scountry:string16,pop:integer,year:short -d csv
 IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
-java epipog -s "*" -f "year=2014" >stdout
+java epipog -s "*" -f "year=2014" -d csv >stdout
+fc stdout tests\7hh.cmp >tmp
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
+
+echo "Test: JSON, blank integer field"
+del \tmp\tmp.*
+java epipog -i tests\7b.txt -Scountry:string16,pop:integer -d json
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+java epipog -i tests\7c.txt -Scountry:string16,pop:integer,year:short -d json
+IF %ERRORLEVEL% NEQ 0 (  echo FAILED rc ) else ( echo PASSED )
+java epipog -s "*" -f "year=2014" -d json >stdout
 fc stdout tests\7hh.cmp >tmp
 IF %ERRORLEVEL% NEQ 0 (  echo FAILED cmp ) else ( echo PASSED )
 
