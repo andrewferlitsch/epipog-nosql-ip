@@ -12,34 +12,34 @@ It incorporates an OOP design methodology, using abstraction and interfaces, and
 
 To produce an executable file, compile all the *.java files within the same directory.  The application can now be run within the same directory (that now contains the compiled *.class files) by issuing ‘java epipog’:
 
-	javac *.java				# compiles into *.class files<br/>
-	java epipog				# will run in the same directory<br/>
+	javac *.java				# compiles into *.class files
+	java epipog				# will run in the same directory
 
 To make the compiled version portable, you need to create a jar file, as follows:
 
-	jar cfe epipog.jar epipog *.class	# archives into jar file<br/>
-	java –jar epipog.jar			# can run anywhere now<br/>
+	jar cfe epipog.jar epipog *.class	# archives into jar file
+	java –jar epipog.jar			# can run anywhere now
 
 ## Command Interface
 
-Usage: epipog <options><br/>
--i inputfile	 # import input file
--s field(s)	 # select fields ( use ‘*’ for all)
--o field(s)   	# order by fields
--d datastore  	# type of data store (binary,psv,csv,json), default: binary
--F format	# format of input file (psv,csv,tsv), default: csv
--C collection 	# name of the data collection
--S schema	 # the schema (key,type pairs) 
--t storage	 # storage type (single,multi), default: single
--I index    	 # index type (linked,binary), default: linked
--P primary	 # primary keys for indexing
--O sort		# sorting algorithm (insert,quick), default: insert
--n 		# no header in input file, used retained/specified schema
--f filter	 	# filter (where clause)
--c cache	# size of cache [STUBBED]
--V            	# vacuum (remove deleted items) from collection [STUBBED]
+Usage: epipog <options>
+	-i inputfile	 # import input file
+	-s field(s)	 # select fields ( use ‘*’ for all)
+	-o field(s)   	# order by fields
+	-d datastore  	# type of data store (binary,psv,csv,json), default: binary
+	-F format	# format of input file (psv,csv,tsv), default: csv
+	-C collection 	# name of the data collection
+	-S schema	 # the schema (key,type pairs) 
+	-t storage	 # storage type (single,multi), default: single
+	-I index    	 # index type (linked,binary), default: linked
+	-P primary	 # primary keys for indexing
+	-O sort		# sorting algorithm (insert,quick), default: insert
+	-n 		# no header in input file, used retained/specified schema
+	-f filter	 	# filter (where clause)
+	-c cache	# size of cache [STUBBED]
+	-V            	# vacuum (remove deleted items) from collection [STUBBED]
 
-## Importing a Dataset
+### Importing a Dataset
 
 Version v1.02 can import a variety of datasets:
 	Character Separated Values (SV):
@@ -49,12 +49,16 @@ Version v1.02 can import a variety of datasets:
     
 Datasets are imported using the -i option. By default, the input format is assumed to be CSV. Alternate input formats can be specified with the –F option.
 
-Example: Import a CSV file
-	java epipg –i input.csv
-Example: Import a TSV file
-	java epipog –I input.tsv –F tsv
-Setting a Data Store Representation
+### Example: Import a CSV file
+	> java epipg –i input.csv
+	
+### Example: Import a TSV file
+	> java epipog –I input.tsv –F tsv
+	
+### Setting a Data Store Representation
+
 By default, imported data sets are stored in binary fixed record data representation (i.e., RDBMS), which is written to the default collection in the temp directory ( /tmp).
+
 The –d option is used to specify the data store representation, when not using the default.
 Version v1.02 supports the following data store representations:
 	Character Separated Values (SV):
@@ -65,11 +69,14 @@ Version v1.02 supports the following data store representations:
 	Binary Fixed Record
 		Binary 	(RDBMS)
 
-Example: Import a dataset and store in a CSV data store:
-	java epipog –i input.txt –d csv
-Example: Import a dataset and store in a JSON data store:
-	java epipog –i input.txt –d json
-Setting a Named Collection
+### Example: Import a dataset and store in a CSV data store:
+	> java epipog –i input.txt –d csv
+	
+### Example: Import a dataset and store in a JSON data store:
+	> java epipog –i input.txt –d json
+	
+### Setting a Named Collection
+
 By default, all data is written to a single collection in the temporary directory (i.e., /tmp) under the name ‘tmp’. The –C option is used to specify a named collection.
 Example: import a first dataset to the collection cars and a second dataset to the collection sales
 	java epipog –i cars.txt –C cars
@@ -79,7 +86,7 @@ When importing a CSV data set, it is assumed that the first line is a heading. U
 Example: Import a csv file without a heading
 	java epipog –i input.csv –F csv -n
 
-## Schema
+### Schema
 
 While version v1.02 does not support a fully schema-less data store, it does support dynamic schemas. Unlike a traditional RDBMS database, a schema does not need to be predefined. Instead, on the very first import you can specify the schema with the –S option. The schema will then be retained and does not need to be re-specified on subsequent imports of data sets. Schemas are specified in name:type sequence separated by commas:
 	-S field1:string16,field:integer
