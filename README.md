@@ -12,17 +12,17 @@ It incorporates an OOP design methodology, using abstraction and interfaces, and
 
 To produce an executable file, compile all the *.java files within the same directory.  The application can now be run within the same directory (that now contains the compiled *.class files) by issuing ‘java epipog’:
 
-	javac *.java				# compiles into *.class files
-	java epipog				# will run in the same directory
+	javac *.java				# compiles into *.class files<br/>
+	java epipog				# will run in the same directory<br/>
 
 To make the compiled version portable, you need to create a jar file, as follows:
 
-	jar cfe epipog.jar epipog *.class	# archives into jar file
-	java –jar epipog.jar			# can run anywhere now
+	jar cfe epipog.jar epipog *.class	# archives into jar file<br/>
+	java –jar epipog.jar			# can run anywhere now<br/>
 
 ## Command Interface
 
-Usage: epipog <options>
+Usage: epipog <options><br/>
 -i inputfile	 # import input file
 -s field(s)	 # select fields ( use ‘*’ for all)
 -o field(s)   	# order by fields
@@ -114,7 +114,8 @@ By default, a linked list is used as the indexing method. The –I option is use
 Note: While –I binary option is accepted for a binary tree index, it was not implemented in v1.02
 Note: The linked list index uses the java hash() function to hash the index strings. Collisions though are not handled in v1.02.
 
-Select
+## Select
+
 The –s option is used to select one or more (or all) fields in a search from a data store.
 Example:  Select the country and state from a collection named cities.
 	java epipog –s country,state –C cities
@@ -128,7 +129,9 @@ By default, sorting is done using a insertion sort algorithm. The –O option ca
 -O insert	(insertion sort)
  	-O quick	(quick sort)
 Note: while the command line syntax supports it, verison v1.02 does not support subgroup sorting (ie., first sort by field1 and then within field1 sort by field2).
-Filter (Where)
+
+## Filter (Where)
+
 The –f option is used to specify a filter (where) clause on a select. One or more filters can be specified as field<op>value pairs separated by a comma. The following operators are supported:
 	=	(equal)
 	!=	(not equal)
@@ -138,7 +141,9 @@ The –f option is used to specify a filter (where) clause on a select. One or m
 	<=	(less than or equal)
 Example: Select all entries where the field state is equal to Oregon
 	select –s “city,postal” –f state=Oregon –C cities
-Storage
+
+## Storage
+
 By default, the collections are stored as a single monolithic file. The –S option can be used to specify other file storage methods:
 	-S single	(single monolithic file)
 	-S multi		(multi-files: sharding)
