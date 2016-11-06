@@ -23,9 +23,9 @@ To make the compiled version portable, you need to create a jar file, as follows
 ## Command Interface
 
 Usage: epipog <options>
-	-i inputfile	 # import input file
-	-s field(s)	 # select fields ( use ‘*’ for all)
-	-o field(s)   	# order by fields
+	> -i inputfile	 # import input file
+	> -s field(s)	 # select fields ( use ‘*’ for all)
+	> -o field(s)   	# order by fields
 	-d datastore  	# type of data store (binary,psv,csv,json), default: binary
 	-F format	# format of input file (psv,csv,tsv), default: csv
 	-C collection 	# name of the data collection
@@ -42,18 +42,19 @@ Usage: epipog <options>
 ### Importing a Dataset
 
 Version v1.02 can import a variety of datasets:
+
 	Character Separated Values (SV):
-		CSV	( comma separated values)
-		PSV	( pipe separated values)
-		TSV	( tab separated values)
+		> CSV	( comma separated values)
+		> PSV	( pipe separated values)
+		> TSV	( tab separated values)
     
 Datasets are imported using the -i option. By default, the input format is assumed to be CSV. Alternate input formats can be specified with the –F option.
 
 ### Example: Import a CSV file
-	> java epipg –i input.csv
+	java epipg –i input.csv
 	
 ### Example: Import a TSV file
-	> java epipog –I input.tsv –F tsv
+	java epipog –I input.tsv –F tsv
 	
 ### Setting a Data Store Representation
 
@@ -78,13 +79,17 @@ Version v1.02 supports the following data store representations:
 ### Setting a Named Collection
 
 By default, all data is written to a single collection in the temporary directory (i.e., /tmp) under the name ‘tmp’. The –C option is used to specify a named collection.
-Example: import a first dataset to the collection cars and a second dataset to the collection sales
-	java epipog –i cars.txt –C cars
-	java epipog –i sales.txt –C sales
-CSV Input files with and without headings
+
+### Example: import a first dataset to the collection cars and a second dataset to the collection sales
+	java epipog –i cars.txt –C cars
+	java epipog –i sales.txt –C sales
+	
+### CSV Input files with and without headings
+
 When importing a CSV data set, it is assumed that the first line is a heading. Use the –n option for CSV (and PSV/TSV) datasets that do not have a heading on the first line.
-Example: Import a csv file without a heading
-	java epipog –i input.csv –F csv -n
+
+### Example: Import a csv file without a heading
+	java epipog –i input.csv –F csv -n
 
 ### Schema
 
@@ -103,32 +108,47 @@ The following types are supported:
 	double		(64-bit float)
 	date		(date string in format: yyyy-mm-dd)
 	time		(time string in format: hh:ss)
+	
 Note: Only ANSI strings are supported in version v1.02.
+
 Example: Import a first CSV dataset with the columns as strings for country, state and city, and the import a second CSV data set with the same columns.
-	java epipog –i mexico.csv-Scountry:string64,state:string64,city:string64
-	java epipog –i canada.csv
+
+	java epipog –i mexico.csv-Scountry:string64,state:string64,city:string64
+	java epipog –i canada.csv
+	
 A schema can also be dynamically extended when importing a subsequent data set that has extended fields. In the above example, we could import a 3rd dataset that has a fourth column for postal.
-	java epipog –i usa.csv -Scountry:string64,state:string64,city:string64,postal:integer
-Primary Key and Indexing
+
+	java epipog –i usa.csv -Scountry:string64,state:string64,city:string64,postal:integer
+	
+### Primary Key and Indexing
+
 By default, there are no primary keys. A primary key can be specified using the –P option for a single field (e.g., column) or a combination of fields. The primary key information is then retained and does not need to be re-specified on subsequent imports. 
+
 When importing, an index will be built for the primary key (or combination). Duplicates matching the primary key are eliminated. The pre-existing entry is marked as dirty and the new entry is inserted to replace it (ie., update on duplicate). For example, if the primary key is country and state, then the second data entry below will replace the first entry:
+
 	Country,State,Pop
 	United States,Oregon,1500000
 	United States,Oregon,2000000
-Example: Import a CSV file and index for primary key combination country and state.
-	java epipog –i input.txt –S country:string32,state:string32,pop:integer –P country,state
+	
+### Example: Import a CSV file and index for primary key combination country and state.
+	java epipog –i input.txt –S country:string32,state:string32,pop:integer –P country,state
+	
 By default, a linked list is used as the indexing method. The –I option is used to specify alternate indexing methods.
 Note: While –I binary option is accepted for a binary tree index, it was not implemented in v1.02
 Note: The linked list index uses the java hash() function to hash the index strings. Collisions though are not handled in v1.02.
 
-## Select
+### Select
 
 The –s option is used to select one or more (or all) fields in a search from a data store.
-Example:  Select the country and state from a collection named cities.
-	java epipog –s country,state –C cities
-Example: select all fields from a collection named cities.
-	java epipog –s “*” –C cities
-Sort (Order By)
+
+### Example:  Select the country and state from a collection named cities.
+	java epipog –s country,state –C cities
+	
+### Example: select all fields from a collection named cities.
+	java epipog –s “*” –C cities
+	
+### Sort (Order By)
+
 The –o option is used to sort the results from a select.
 Example: Select the country and state from a collection named cities and alphabetically sort by state.
 	 java epipog –s country,state –C cities –o state
@@ -137,7 +157,7 @@ By default, sorting is done using a insertion sort algorithm. The –O option ca
  	-O quick	(quick sort)
 Note: while the command line syntax supports it, verison v1.02 does not support subgroup sorting (ie., first sort by field1 and then within field1 sort by field2).
 
-## Filter (Where)
+### Filter (Where)
 
 The –f option is used to specify a filter (where) clause on a select. One or more filters can be specified as field<op>value pairs separated by a comma. The following operators are supported:
 	=	(equal)
@@ -149,7 +169,7 @@ The –f option is used to specify a filter (where) clause on a select. One or m
 Example: Select all entries where the field state is equal to Oregon
 	select –s “city,postal” –f state=Oregon –C cities
 
-## Storage
+### Storage
 
 By default, the collections are stored as a single monolithic file. The –S option can be used to specify other file storage methods:
 	-S single	(single monolithic file)
